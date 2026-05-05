@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://du4a8euw5pmed"]
 
 [ext_resource type="PackedScene" uid="uid://bxvwl1qfvduyi" path="res://escenas/Jugador.tscn" id="1_h3ccx"]
+[ext_resource type="Script" uid="uid://ed2hoit5ucrf" path="res://scripts/Mundo.gd" id="1_ypkjc"]
 [ext_resource type="Texture2D" uid="uid://dd8yjt2h40qye" path="res://fondos/main_background.png" id="2_afu8k"]
 [ext_resource type="Texture2D" uid="uid://bklfgst0fugi4" path="res://sprites/tilesets/spr_fencePost.png" id="3_0nm1d"]
 
@@ -47,6 +48,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ypkjc")
 
 [node name="Node2D" type="Node2D" unique_id=585555696]
+script = ExtResource("1_ypkjc")
 
 [node name="Fondo" type="Sprite2D" parent="." unique_id=2099713201]
 position = Vector2(640, 384)
