@@ -1,3 +1,41 @@
 [gd_scene format=3 uid="uid://cj7s3hyipaqdn"]
 
-[node name="Node2D" type="Node2D" unique_id=480250238]
+[ext_resource type="Texture2D" uid="uid://dknrsa5818pur" path="res://fondos/menu_background.png" id="1_7pspv"]
+[ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="2_ltmtt"]
+[ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="3_hagvj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mbk72"]
+font = ExtResource("3_hagvj")
+font_size = 32
+font_color = Color(0.23, 0.13202, 0.066700004, 1)
+
+[node name="Control" type="Control" unique_id=1167554696]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fondo" type="TextureRect" parent="." unique_id=543970480]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_7pspv")
+
+[node name="BotonJugar" type="TextureButton" parent="." unique_id=632584686]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 330.0
+offset_right = 863.0
+offset_bottom = 426.0
+texture_normal = ExtResource("2_ltmtt")
+
+[node name="Texto" type="Label" parent="BotonJugar" unique_id=1108130871]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 27.0
+offset_right = 242.0
+offset_bottom = 66.0
+text = "JUGAR"
+label_settings = SubResource("LabelSettings_mbk72")
