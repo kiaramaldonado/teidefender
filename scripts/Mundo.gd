@@ -18,6 +18,8 @@ func _ready():
 	timer.timeout.connect(_spawn_basura)
 	timer.start()
 	
+	$HUD/Puntos.text = "0"
+	
 	# Spawn inicial
 	_spawn_basura()
 
@@ -29,4 +31,4 @@ func _spawn_basura():
 
 func basura_recogida():
 	puntos += 25
-	print("Puntos: ", puntos)
+	$HUD/Puntos.text = str(puntos)
