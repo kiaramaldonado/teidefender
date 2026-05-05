@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dd0gewhqdfpst"]
+
+[ext_resource type="Texture2D" uid="uid://cii0pbnfjo4ab" path="res://sprites/items/coffee.png" id="1_b3r20"]
+[ext_resource type="Script" uid="uid://d22nb3jfwgjww" path="res://scripts/PowerUpBarraquito.gd" id="1_n3tx1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3tx1"]
+radius = 16.0
+
+[node name="Area2D" type="Area2D" unique_id=1653193282]
+script = ExtResource("1_n3tx1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=597160163]
+shape = SubResource("CircleShape2D_n3tx1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1792819528]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_b3r20")
