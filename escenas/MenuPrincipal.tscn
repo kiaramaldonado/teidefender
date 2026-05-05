@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cj7s3hyipaqdn"]
 
 [ext_resource type="Texture2D" uid="uid://dknrsa5818pur" path="res://fondos/menu_background.png" id="1_7pspv"]
+[ext_resource type="Script" uid="uid://b0kyiun2deoqc" path="res://scripts/MenuPrincipal.gd" id="1_hagvj"]
 [ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="2_ltmtt"]
 [ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="3_hagvj"]
 
@@ -16,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hagvj")
 
 [node name="Fondo" type="TextureRect" parent="." unique_id=543970480]
 layout_mode = 0
