@@ -6,6 +6,6 @@ func _ready():
 	print("Barraquito listo")
 
 func _on_body_entered(body):
-	print("Contacto detectado")
-	body.activar_barraquito()
-	queue_free()
+	if body.has_method("activar_barraquito"):
+		body.activar_barraquito()
+		queue_free()
