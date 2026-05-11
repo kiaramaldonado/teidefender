@@ -1,3 +1,66 @@
 [gd_scene format=3 uid="uid://djv8mvhon47gr"]
 
-[node name="Node2D" type="Node2D" unique_id=2035142094]
+[ext_resource type="Script" uid="uid://gameover02tdf" path="res://scripts/GameOver.gd" id="1_gover"]
+[ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="2_gover"]
+[ext_resource type="AudioStream" uid="uid://go_sound_tdf1" path="res://sonidos/game_over.mp3" id="3_gover"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_go1"]
+font = ExtResource("2_gover")
+font_size = 64
+font_color = Color(0.9, 0.1, 0.1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_go2"]
+font = ExtResource("2_gover")
+font_size = 28
+font_color = Color(1, 1, 1, 1)
+
+[node name="Control" type="Control" unique_id=550000001]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gover")
+
+[node name="Fondo" type="ColorRect" parent="." unique_id=550000002]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 768.0
+color = Color(0.05, 0.05, 0.1, 1)
+
+[node name="TituloGameOver" type="Label" parent="." unique_id=550000003]
+offset_left = 340.0
+offset_top = 200.0
+offset_right = 940.0
+offset_bottom = 290.0
+text = "¡GAME OVER!"
+label_settings = SubResource("LabelSettings_go1")
+horizontal_alignment = 1
+
+[node name="SubtituloGameOver" type="Label" parent="." unique_id=550000004]
+offset_left = 300.0
+offset_top = 310.0
+offset_right = 980.0
+offset_bottom = 360.0
+text = "El Parque Nacional del Teide te necesita..."
+label_settings = SubResource("LabelSettings_go2")
+horizontal_alignment = 1
+
+[node name="BotonReiniciar" type="Button" parent="." unique_id=550000005]
+offset_left = 440.0
+offset_top = 420.0
+offset_right = 840.0
+offset_bottom = 490.0
+text = "Volver a intentarlo"
+
+[node name="BotonSalir" type="Button" parent="." unique_id=550000006]
+offset_left = 440.0
+offset_top = 510.0
+offset_right = 840.0
+offset_bottom = 580.0
+text = "Salir al Menú Principal"
+
+[node name="SonidoGameOver" type="AudioStreamPlayer" parent="." unique_id=550000007]
+stream = ExtResource("3_gover")
