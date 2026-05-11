@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://homero001tdf"]
+
+[ext_resource type="Script" uid="uid://homero002tdf" path="res://scripts/Homero.gd" id="1_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_id01" path="res://sprites/enemigos/homero/idle_down_1.png" id="2_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_id02" path="res://sprites/enemigos/homero/idle_down_2.png" id="3_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_id03" path="res://sprites/enemigos/homero/idle_down_3.png" id="4_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_id04" path="res://sprites/enemigos/homero/idle_down_4.png" id="5_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_il01" path="res://sprites/enemigos/homero/idle_left_1.png" id="6_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_il02" path="res://sprites/enemigos/homero/idle_left_2.png" id="7_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_il03" path="res://sprites/enemigos/homero/idle_left_3.png" id="8_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_il04" path="res://sprites/enemigos/homero/idle_left_4.png" id="9_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_ir01" path="res://sprites/enemigos/homero/idle_right_1.png" id="10_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_ir02" path="res://sprites/enemigos/homero/idle_right_2.png" id="11_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_ir03" path="res://sprites/enemigos/homero/idle_right_3.png" id="12_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_ir04" path="res://sprites/enemigos/homero/idle_right_4.png" id="13_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_iu01" path="res://sprites/enemigos/homero/idle_up_1.png" id="14_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_iu02" path="res://sprites/enemigos/homero/idle_up_2.png" id="15_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_iu03" path="res://sprites/enemigos/homero/idle_up_3.png" id="16_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_iu04" path="res://sprites/enemigos/homero/idle_up_4.png" id="17_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wd01" path="res://sprites/enemigos/homero/walk_down_1.png" id="18_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wd02" path="res://sprites/enemigos/homero/walk_down_2.png" id="19_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wd03" path="res://sprites/enemigos/homero/walk_down_3.png" id="20_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wd04" path="res://sprites/enemigos/homero/walk_down_4.png" id="21_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wd05" path="res://sprites/enemigos/homero/walk_down_5.png" id="22_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wl01" path="res://sprites/enemigos/homero/walk_left_1.png" id="23_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wl02" path="res://sprites/enemigos/homero/walk_left_2.png" id="24_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wl03" path="res://sprites/enemigos/homero/walk_left_3.png" id="25_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wl04" path="res://sprites/enemigos/homero/walk_left_4.png" id="26_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wl05" path="res://sprites/enemigos/homero/walk_left_5.png" id="27_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wr01" path="res://sprites/enemigos/homero/walk_right_1.png" id="28_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wr02" path="res://sprites/enemigos/homero/walk_right_2.png" id="29_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wr03" path="res://sprites/enemigos/homero/walk_right_3.png" id="30_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wr04" path="res://sprites/enemigos/homero/walk_right_4.png" id="31_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wr05" path="res://sprites/enemigos/homero/walk_right_5.png" id="32_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wu01" path="res://sprites/enemigos/homero/walk_up_1.png" id="33_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wu02" path="res://sprites/enemigos/homero/walk_up_2.png" id="34_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wu03" path="res://sprites/enemigos/homero/walk_up_3.png" id="35_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wu04" path="res://sprites/enemigos/homero/walk_up_4.png" id="36_hmro"]
+[ext_resource type="Texture2D" uid="uid://hmro_wu05" path="res://sprites/enemigos/homero/walk_up_5.png" id="37_hmro"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hmro"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hmro")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hmro")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hmro")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_hmro")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_hmro")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_hmro")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("28_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_hmro")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_hmro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_hmro")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hmro"]
+height = 32.0
+
+[node name="Homero" type="CharacterBody2D" unique_id=333333301]
+script = ExtResource("1_hmro")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=333333302]
+sprite_frames = SubResource("SpriteFrames_hmro")
+animation = &"idle_down"
+
+[node name="Colision" type="CollisionShape2D" parent="." unique_id=333333303]
+shape = SubResource("CapsuleShape2D_hmro")
