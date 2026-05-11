@@ -1,0 +1,287 @@
+[gd_scene format=3 uid="uid://spencer001tdf"]
+
+[ext_resource type="Script" uid="uid://spencer002tdf" path="res://scripts/Spencer.gd" id="1_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_id01" path="res://sprites/enemigos/spencer/idle_down_1.png" id="2_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_id02" path="res://sprites/enemigos/spencer/idle_down_2.png" id="3_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_id03" path="res://sprites/enemigos/spencer/idle_down_3.png" id="4_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_id04" path="res://sprites/enemigos/spencer/idle_down_4.png" id="5_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_il01" path="res://sprites/enemigos/spencer/idle_left_1.png" id="6_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_il02" path="res://sprites/enemigos/spencer/idle_left_2.png" id="7_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_il03" path="res://sprites/enemigos/spencer/idle_left_3.png" id="8_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_il04" path="res://sprites/enemigos/spencer/idle_left_4.png" id="9_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_ir01" path="res://sprites/enemigos/spencer/idle_right_1.png" id="10_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_ir02" path="res://sprites/enemigos/spencer/idle_right_2.png" id="11_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_ir03" path="res://sprites/enemigos/spencer/idle_right_3.png" id="12_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_ir04" path="res://sprites/enemigos/spencer/idle_right_4.png" id="13_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_iu01" path="res://sprites/enemigos/spencer/idle_up_1.png" id="14_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_iu02" path="res://sprites/enemigos/spencer/idle_up_2.png" id="15_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_iu03" path="res://sprites/enemigos/spencer/idle_up_3.png" id="16_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_iu04" path="res://sprites/enemigos/spencer/idle_up_4.png" id="17_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wd01" path="res://sprites/enemigos/spencer/walk_down_1.png" id="18_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wd02" path="res://sprites/enemigos/spencer/walk_down_2.png" id="19_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wd03" path="res://sprites/enemigos/spencer/walk_down_3.png" id="20_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wd04" path="res://sprites/enemigos/spencer/walk_down_4.png" id="21_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wl01" path="res://sprites/enemigos/spencer/walk_left_1.png" id="22_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wl02" path="res://sprites/enemigos/spencer/walk_left_2.png" id="23_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wl03" path="res://sprites/enemigos/spencer/walk_left_3.png" id="24_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wl04" path="res://sprites/enemigos/spencer/walk_left_4.png" id="25_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wr01" path="res://sprites/enemigos/spencer/walk_right_1.png" id="26_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wr02" path="res://sprites/enemigos/spencer/walk_right_2.png" id="27_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wr03" path="res://sprites/enemigos/spencer/walk_right_3.png" id="28_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wr04" path="res://sprites/enemigos/spencer/walk_right_4.png" id="29_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wu01" path="res://sprites/enemigos/spencer/walk_up_1.png" id="30_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wu02" path="res://sprites/enemigos/spencer/walk_up_2.png" id="31_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wu03" path="res://sprites/enemigos/spencer/walk_up_3.png" id="32_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_wu04" path="res://sprites/enemigos/spencer/walk_up_4.png" id="33_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fd01" path="res://sprites/enemigos/spencer/flash_down_1.png" id="34_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fd02" path="res://sprites/enemigos/spencer/flash_down_2.png" id="35_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fd03" path="res://sprites/enemigos/spencer/flash_down_3.png" id="36_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fd04" path="res://sprites/enemigos/spencer/flash_down_4.png" id="37_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fd05" path="res://sprites/enemigos/spencer/flash_down_5.png" id="38_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fl01" path="res://sprites/enemigos/spencer/flash_left_1.png" id="39_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fl02" path="res://sprites/enemigos/spencer/flash_left_2.png" id="40_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fl03" path="res://sprites/enemigos/spencer/flash_left_3.png" id="41_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fl04" path="res://sprites/enemigos/spencer/flash_left_4.png" id="42_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fl05" path="res://sprites/enemigos/spencer/flash_left_5.png" id="43_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fr01" path="res://sprites/enemigos/spencer/flash_right_1.png" id="44_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fr02" path="res://sprites/enemigos/spencer/flash_right_2.png" id="45_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fr03" path="res://sprites/enemigos/spencer/flash_right_3.png" id="46_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fr04" path="res://sprites/enemigos/spencer/flash_right_4.png" id="47_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fr05" path="res://sprites/enemigos/spencer/flash_right_5.png" id="48_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fu01" path="res://sprites/enemigos/spencer/flash_up_1.png" id="49_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fu02" path="res://sprites/enemigos/spencer/flash_up_2.png" id="50_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fu03" path="res://sprites/enemigos/spencer/flash_up_3.png" id="51_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fu04" path="res://sprites/enemigos/spencer/flash_up_4.png" id="52_spnc"]
+[ext_resource type="Texture2D" uid="uid://spnc_fu05" path="res://sprites/enemigos/spencer/flash_up_5.png" id="53_spnc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_spnc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("34_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_spnc")
+}],
+"loop": false,
+"name": &"flash_down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("39_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_spnc")
+}],
+"loop": false,
+"name": &"flash_left",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("44_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_spnc")
+}],
+"loop": false,
+"name": &"flash_right",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("49_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_spnc")
+}],
+"loop": false,
+"name": &"flash_up",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_spnc")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_spnc")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_spnc")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_spnc")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_spnc")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_spnc")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_spnc")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_spnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_spnc")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_spnc"]
+height = 32.0
+
+[node name="Spencer" type="CharacterBody2D" unique_id=222222201]
+script = ExtResource("1_spnc")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=222222202]
+sprite_frames = SubResource("SpriteFrames_spnc")
+animation = &"idle_down"
+
+[node name="Colision" type="CollisionShape2D" parent="." unique_id=222222203]
+shape = SubResource("CapsuleShape2D_spnc")
