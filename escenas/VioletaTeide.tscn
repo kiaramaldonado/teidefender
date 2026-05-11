@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://violeta0001tdf"]
+
+[ext_resource type="Script" uid="uid://violeta0002tdf" path="res://scripts/VioletaTeide.gd" id="1_viol1"]
+[ext_resource type="Texture2D" uid="uid://violeta0003tdf" path="res://sprites/items/violets.png" id="2_viol1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_viol1"]
+radius = 14.0
+
+[node name="Area2D" type="Area2D" unique_id=111111101]
+script = ExtResource("1_viol1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=111111102]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_viol1")
+
+[node name="Colision" type="CollisionShape2D" parent="." unique_id=111111103]
+shape = SubResource("CircleShape2D_viol1")
