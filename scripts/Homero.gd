@@ -6,30 +6,35 @@ const INTERVALO_VIOLETA = 15.0
 var ultima_direccion = "down"
 var timer_violeta = 0.0
 var nav_agent: NavigationAgent2D
+var _nav_listo = false
 
 const WAYPOINTS = [
 	Vector2(200, 130), Vector2(280, 130), Vector2(350, 130),
 	Vector2(550, 130), Vector2(650, 130), Vector2(750, 130),
-	Vector2(170, 250), Vector2(170, 320), Vector2(170, 390),
+	Vector2(170, 250), Vector2(184, 328), Vector2(184, 392),  # (170,320) y (170,390) estaban dentro de valla
 	Vector2(450, 200), Vector2(520, 200), Vector2(600, 200),
-	Vector2(350, 350), Vector2(430, 350), Vector2(510, 350),
+	Vector2(344, 360), Vector2(424, 360), Vector2(510, 350),  # (350,350) y (430,350) estaban dentro de valla
 	Vector2(700, 280), Vector2(780, 280), Vector2(860, 280),
 	Vector2(250, 480), Vector2(350, 480), Vector2(430, 480),
-	Vector2(620, 480), Vector2(720, 480), Vector2(820, 480),
-	Vector2(900, 380), Vector2(900, 450), Vector2(970, 420),
+	Vector2(616, 472), Vector2(720, 480), Vector2(820, 480),  # (620,480) estaba dentro de valla
+	Vector2(900, 380), Vector2(904, 424), Vector2(970, 420),  # (900,450) estaba dentro de valla
 ]
 
 const VIOLETA_SCENE = preload("res://escenas/VioletaTeide.tscn")
 
 func _ready():
 	nav_agent = $NavAgent
-	nav_agent.navigation_finished.connect(_nueva_meta)
 	timer_violeta = INTERVALO_VIOLETA
-	# Esperar un frame para que el nav mesh esté listo
+	# Esperar a que Mundo._ready() haya creado el nav mesh y el servidor lo procese
 	await get_tree().process_frame
+	_nav_listo = true
+	nav_agent.navigation_finished.connect(_nueva_meta)
 	_nueva_meta()
 
 func _physics_process(delta):
+	if not _nav_listo:
+		return
+
 	timer_violeta -= delta
 	if timer_violeta <= 0:
 		_plantar_violeta()
