@@ -43,6 +43,11 @@ func _nueva_direccion():
 	timer_cambio = INTERVALO_DIR_MIN + randf() * (INTERVALO_DIR_MAX - INTERVALO_DIR_MIN)
 	var dirs = [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN, Vector2.ZERO]
 	velocity = dirs[randi() % dirs.size()] * VELOCIDAD
+	if velocity.length() > 0:
+		if abs(velocity.x) > abs(velocity.y):
+			ultima_direccion = "left" if velocity.x > 0 else "right"
+		else:
+			ultima_direccion = "down" if velocity.y > 0 else "up"
 
 func _ejecutar_puñetazo():
 	golpeando = true
@@ -66,10 +71,6 @@ func _ejecutar_puñetazo():
 
 func _actualizar_animacion():
 	if velocity.length() > 0:
-		if abs(velocity.x) > abs(velocity.y):
-			ultima_direccion = "right" if velocity.x > 0 else "left"
-		else:
-			ultima_direccion = "down" if velocity.y > 0 else "up"
 		$Sprite.play("walk_" + ultima_direccion)
 	else:
-		$Sprite.play("idle_" + ultima_direccion)
+		$Sprite.play("idle_down")
