@@ -201,3 +201,7 @@ animation = &"idle_down"
 
 [node name="Colision" type="CollisionShape2D" parent="." unique_id=333333303]
 shape = SubResource("CapsuleShape2D_hmro")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=333333304]
+path_desired_distance = 8.0
+target_desired_distance = 16.0

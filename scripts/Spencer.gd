@@ -3,72 +3,54 @@ extends CharacterBody2D
 const VELOCIDAD = 55.0
 const DISTANCIA_FLASH = 55.0
 const COOLDOWN_FLASH = 6.0
-const INTERVALO_DIR_MIN = 1.5
-const INTERVALO_DIR_MAX = 3.0
 
 var ultima_direccion = "down"
 var timer_flash = 0.0
-var timer_cambio = 0.0
-var timer_evitar = 0.0
 var usando_flash = false
 var jugador = null
+var nav_agent: NavigationAgent2D
 
 func _ready():
 	jugador = get_tree().get_first_node_in_group("jugador")
-	_nueva_direccion()
+	nav_agent = $NavAgent
 
 func _physics_process(delta):
 	timer_flash -= delta
-	timer_cambio -= delta
-	timer_evitar -= delta
 
 	if usando_flash:
 		return
+	if not jugador:
+		return
 
-	if jugador:
-		var diff = jugador.position - position
-		var distancia = diff.length()
+	# Actualizar destino hacia el jugador cada frame
+	nav_agent.target_position = jugador.global_position
 
-		if distancia < DISTANCIA_FLASH and timer_flash <= 0:
-			_ejecutar_flash()
-			return
+	if jugador.global_position.distance_to(global_position) < DISTANCIA_FLASH and timer_flash <= 0:
+		_ejecutar_flash()
+		return
 
-		if distancia < 300 and timer_evitar <= 0:
-			velocity = diff.normalized() * VELOCIDAD
-		else:
-			if timer_cambio <= 0:
-				_nueva_direccion()
+	if not nav_agent.is_navigation_finished():
+		var siguiente = nav_agent.get_next_path_position()
+		velocity = (siguiente - global_position).normalized() * VELOCIDAD
+	else:
+		velocity = Vector2.ZERO
 
-	var vel_antes = velocity
 	move_and_slide()
-	if vel_antes.length() > 0 and velocity.length() < vel_antes.length() * 0.3:
-		timer_evitar = 2.0
-		_nueva_direccion()
-
 	_actualizar_animacion()
-
-func _nueva_direccion():
-	timer_cambio = INTERVALO_DIR_MIN + randf() * (INTERVALO_DIR_MAX - INTERVALO_DIR_MIN)
-	var dirs = [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
-	velocity = dirs[randi() % dirs.size()] * VELOCIDAD
 
 func _ejecutar_flash():
 	usando_flash = true
 	timer_flash = COOLDOWN_FLASH
 	velocity = Vector2.ZERO
-
 	if jugador:
 		var diff = jugador.position - position
 		if abs(diff.x) > abs(diff.y):
 			ultima_direccion = "right" if diff.x > 0 else "left"
 		else:
 			ultima_direccion = "down" if diff.y > 0 else "up"
-
 	$Sprite.play("flash_" + ultima_direccion)
-
 	if jugador:
 		jugador.recibir_flash()
-
 	await $Sprite.animation_finished
 	usando_flash = false
 

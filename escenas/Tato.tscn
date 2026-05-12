@@ -254,3 +254,7 @@ animation = &"punch_down"
 
 [node name="Colision" type="CollisionShape2D" parent="." unique_id=86633148]
 shape = SubResource("CapsuleShape2D_ut25i")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=86633149]
+path_desired_distance = 8.0
+target_desired_distance = 16.0
