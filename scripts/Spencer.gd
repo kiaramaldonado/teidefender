@@ -9,12 +9,18 @@ var timer_flash = 0.0
 var usando_flash = false
 var jugador = null
 var nav_agent: NavigationAgent2D
+var _nav_listo = false
 
 func _ready():
 	jugador = get_tree().get_first_node_in_group("jugador")
 	nav_agent = $NavAgent
+	await get_tree().process_frame
+	_nav_listo = true
 
 func _physics_process(delta):
+	if not _nav_listo:
+		return
+
 	timer_flash -= delta
 
 	if usando_flash:
