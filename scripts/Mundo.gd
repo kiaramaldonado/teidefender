@@ -3,7 +3,7 @@ extends Node2D
 const BASURA_SCENE = preload("res://escenas/Basura.tscn")
 const BARRAQUITO_SCENE = preload("res://escenas/PowerUpBarraquito.tscn")
 const Maze = preload("res://scripts/Maze.gd")
-const MAX_BASURA = 8
+const MAX_BASURA = 16  # gran colchón: cada bolsa baja la barra ~6 %
 
 var puntos = 200
 var basura_en_campo = 0
@@ -38,7 +38,7 @@ func _ready():
 	_timer_basura.one_shot = true
 	add_child(_timer_basura)
 	_timer_basura.timeout.connect(_on_timer_basura)
-	_timer_basura.start(randf_range(3.5, 5.5))
+	_timer_basura.start(randf_range(3.5, 5.0))
 
 	_timer_powerup = Timer.new()
 	_timer_powerup.one_shot = true
@@ -63,8 +63,8 @@ func _ready():
 	$BGM.finished.connect(func(): $BGM.play())
 	$BGM.play()
 
-	# Basura inicial para que el jugador tenga objetivos inmediatos
-	for i in range(3):
+	# Basura inicial: el jugador empieza con varias bolsas a la vista
+	for i in range(5):
 		_spawn_basura()
 
 func _process(delta):
@@ -106,8 +106,10 @@ func activar_ceguera():
 
 func _on_timer_basura():
 	_spawn_basura()
-	var presion = clamp(1.0 - (Time.get_ticks_msec() / 120000.0), 0.55, 1.0)
-	_timer_basura.start(randf_range(3.5, 5.5) * presion)
+	# La presión sube muy despacio: 4 minutos hasta el mínimo, y el mínimo
+	# es 85 % del intervalo base. El ritmo es vivo pero nunca abrumador.
+	var presion = clamp(1.0 - (Time.get_ticks_msec() / 240000.0), 0.85, 1.0)
+	_timer_basura.start(randf_range(3.5, 5.0) * presion)
 
 func _on_timer_powerup():
 	_spawn_barraquito()
