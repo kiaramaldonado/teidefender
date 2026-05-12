@@ -14,29 +14,38 @@ var rush_activo = false
 var spawn_points = [
 	Vector2(200, 130), Vector2(280, 130), Vector2(350, 130),
 	Vector2(550, 130), Vector2(650, 130), Vector2(750, 130),
-	Vector2(170, 250), Vector2(170, 320), Vector2(170, 390),
+	Vector2(170, 250), Vector2(184, 328), Vector2(184, 392),
 	Vector2(450, 200), Vector2(520, 200), Vector2(600, 200),
-	Vector2(350, 350), Vector2(430, 350), Vector2(510, 350),
+	Vector2(344, 360), Vector2(424, 360), Vector2(510, 350),
 	Vector2(700, 280), Vector2(780, 280), Vector2(860, 280),
 	Vector2(250, 480), Vector2(350, 480), Vector2(430, 480),
-	Vector2(620, 480), Vector2(720, 480), Vector2(820, 480),
-	Vector2(900, 380), Vector2(900, 450), Vector2(970, 420),
+	Vector2(616, 472), Vector2(720, 480), Vector2(820, 480),
+	Vector2(900, 380), Vector2(904, 424), Vector2(970, 420),
+	# Puntos extra para más variedad
+	Vector2(120, 100), Vector2(400, 100), Vector2(900, 110),
+	Vector2(1100, 250), Vector2(1100, 450), Vector2(1180, 600),
+	Vector2(120, 600), Vector2(500, 700), Vector2(1000, 700),
 ]
+
+var _timer_basura: Timer
+var _timer_powerup: Timer
 
 func _ready():
 	_crear_navegacion()
 
-	var timer_basura = Timer.new()
-	add_child(timer_basura)
-	timer_basura.wait_time = 5.0
-	timer_basura.timeout.connect(_spawn_basura)
-	timer_basura.start()
+	# Timers con intervalos aleatorios — cada disparo agenda el siguiente
+	# con un nuevo tiempo, para que la partida no se sienta mecánica.
+	_timer_basura = Timer.new()
+	_timer_basura.one_shot = true
+	add_child(_timer_basura)
+	_timer_basura.timeout.connect(_on_timer_basura)
+	_timer_basura.start(randf_range(3.5, 5.5))
 
-	var timer_powerup = Timer.new()
-	add_child(timer_powerup)
-	timer_powerup.wait_time = 20.0
-	timer_powerup.timeout.connect(_spawn_barraquito)
-	timer_powerup.start()
+	_timer_powerup = Timer.new()
+	_timer_powerup.one_shot = true
+	add_child(_timer_powerup)
+	_timer_powerup.timeout.connect(_on_timer_powerup)
+	_timer_powerup.start(randf_range(17.0, 24.0))
 
 	$HUD/Puntos.text = str(puntos)
 	$HUD/BarraIntegridad.value = 100
@@ -55,6 +64,9 @@ func _ready():
 	$BGM.finished.connect(func(): $BGM.play())
 	$BGM.play()
 
+	# 3 piezas de basura iniciales para que el jugador tenga acción inmediata
+	_spawn_basura()
+	_spawn_basura()
 	_spawn_basura()
 
 func _process(delta):
@@ -93,6 +105,17 @@ func activar_ceguera():
 	await get_tree().create_timer(3.0).timeout
 	if not partida_terminada:
 		$HUD/PantallaBlanca.visible = false
+
+func _on_timer_basura():
+	_spawn_basura()
+	# El intervalo se acorta gradualmente con el tiempo de juego
+	# para aumentar la presión a medida que avanza la partida.
+	var presion = clamp(1.0 - (Time.get_ticks_msec() / 120000.0), 0.55, 1.0)
+	_timer_basura.start(randf_range(3.5, 5.5) * presion)
+
+func _on_timer_powerup():
+	_spawn_barraquito()
+	_timer_powerup.start(randf_range(17.0, 24.0))
 
 func _spawn_basura():
 	if partida_terminada or basura_en_campo >= MAX_BASURA:
@@ -154,7 +177,9 @@ func game_over():
 
 func _crear_navegacion():
 	var nav_poly = NavigationPolygon.new()
-	nav_poly.agent_radius = 10.0
+	# 12px de radio fuerza a los agentes a circular por el centro de los pasillos,
+	# eliminando casi por completo los roces con las vallas.
+	nav_poly.agent_radius = 12.0
 
 	# NavigationMeshSourceGeometryData2D is the correct Godot 4.3+ API;
 	# it handles winding order automatically and doesn't rely on the deprecated
