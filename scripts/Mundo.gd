@@ -4,7 +4,7 @@ const BASURA_SCENE = preload("res://escenas/Basura.tscn")
 const BARRAQUITO_SCENE = preload("res://escenas/PowerUpBarraquito.tscn")
 const MAX_BASURA = 8
 
-var puntos = 0
+var puntos = 200  # margen inicial para no sufrir game over antes de recoger basura
 var basura_en_campo = 0
 var partida_terminada = false
 var timer_barraquito_restante = 0.0
@@ -38,7 +38,7 @@ func _ready():
 	timer_powerup.timeout.connect(_spawn_barraquito)
 	timer_powerup.start()
 
-	$HUD/Puntos.text = "0"
+	$HUD/Puntos.text = str(puntos)
 	$HUD/BarraIntegridad.value = 100
 	$HUD/TimerBarraquito.visible = false
 	$HUD/PantallaBlanca.visible = false
@@ -156,58 +156,59 @@ func _crear_navegacion():
 	var nav_poly = NavigationPolygon.new()
 	nav_poly.agent_radius = 10.0
 
-	# Límite exterior navegable (sentido horario = contorno exterior)
-	nav_poly.add_outline(PackedVector2Array([
-		Vector2(40, 40),
-		Vector2(1240, 40),
-		Vector2(1240, 728),
-		Vector2(40, 728),
+	# NavigationMeshSourceGeometryData2D is the correct Godot 4.3+ API;
+	# it handles winding order automatically and doesn't rely on the deprecated
+	# make_polygons_from_outlines() path.
+	var geo = NavigationMeshSourceGeometryData2D.new()
+
+	# Outer walkable boundary
+	geo.add_traversable_outline(PackedVector2Array([
+		Vector2(40, 40), Vector2(1240, 40), Vector2(1240, 728), Vector2(40, 728),
 	]))
 
-	# Vallas como agujeros (sentido antihorario = hueco/obstáculo).
-	# Calculados a partir de las posiciones reales de los tiles (16x16 px).
-	var vallas = [
-		PackedVector2Array([Vector2(320,224),Vector2(80,224),Vector2(80,240),Vector2(320,240)]),
-		PackedVector2Array([Vector2(96,240),Vector2(80,240),Vector2(80,496),Vector2(96,496)]),
-		PackedVector2Array([Vector2(336,496),Vector2(80,496),Vector2(80,512),Vector2(336,512)]),
-		PackedVector2Array([Vector2(176,304),Vector2(160,304),Vector2(160,416),Vector2(176,416)]),
-		PackedVector2Array([Vector2(336,416),Vector2(160,416),Vector2(160,432),Vector2(336,432)]),
-		PackedVector2Array([Vector2(496,336),Vector2(240,336),Vector2(240,352),Vector2(496,352)]),
-		PackedVector2Array([Vector2(768,80),Vector2(304,80),Vector2(304,96),Vector2(768,96)]),
-		PackedVector2Array([Vector2(320,96),Vector2(304,96),Vector2(304,224),Vector2(320,224)]),
-		PackedVector2Array([Vector2(336,512),Vector2(320,512),Vector2(320,656),Vector2(336,656)]),
-		PackedVector2Array([Vector2(784,656),Vector2(320,656),Vector2(320,672),Vector2(784,672)]),
-		PackedVector2Array([Vector2(544,160),Vector2(384,160),Vector2(384,176),Vector2(544,176)]),
-		PackedVector2Array([Vector2(400,176),Vector2(384,176),Vector2(384,256),Vector2(400,256)]),
-		PackedVector2Array([Vector2(496,416),Vector2(400,416),Vector2(400,432),Vector2(496,432)]),
-		PackedVector2Array([Vector2(416,496),Vector2(400,496),Vector2(400,576),Vector2(416,576)]),
-		PackedVector2Array([Vector2(704,576),Vector2(400,576),Vector2(400,592),Vector2(704,592)]),
-		PackedVector2Array([Vector2(480,176),Vector2(464,176),Vector2(464,256),Vector2(480,256)]),
-		PackedVector2Array([Vector2(496,432),Vector2(480,432),Vector2(480,464),Vector2(496,464)]),
-		PackedVector2Array([Vector2(496,480),Vector2(480,480),Vector2(480,496),Vector2(496,496)]),
-		PackedVector2Array([Vector2(528,496),Vector2(480,496),Vector2(480,512),Vector2(528,512)]),
-		PackedVector2Array([Vector2(544,96),Vector2(528,96),Vector2(528,160),Vector2(544,160)]),
-		PackedVector2Array([Vector2(624,496),Vector2(592,496),Vector2(592,512),Vector2(624,512)]),
-		PackedVector2Array([Vector2(1056,160),Vector2(608,160),Vector2(608,176),Vector2(1056,176)]),
-		PackedVector2Array([Vector2(752,240),Vector2(608,240),Vector2(608,256),Vector2(752,256)]),
-		PackedVector2Array([Vector2(624,256),Vector2(608,256),Vector2(608,288),Vector2(624,288)]),
-		PackedVector2Array([Vector2(624,352),Vector2(608,352),Vector2(608,464),Vector2(624,464)]),
-		PackedVector2Array([Vector2(624,480),Vector2(608,480),Vector2(608,496),Vector2(624,496)]),
-		PackedVector2Array([Vector2(976,352),Vector2(688,352),Vector2(688,368),Vector2(976,368)]),
-		PackedVector2Array([Vector2(704,368),Vector2(688,368),Vector2(688,576),Vector2(704,576)]),
-		PackedVector2Array([Vector2(768,96),Vector2(752,96),Vector2(752,160),Vector2(768,160)]),
-		PackedVector2Array([Vector2(784,432),Vector2(768,432),Vector2(768,576),Vector2(784,576)]),
-		PackedVector2Array([Vector2(1056,576),Vector2(768,576),Vector2(768,592),Vector2(1056,592)]),
-		PackedVector2Array([Vector2(784,592),Vector2(768,592),Vector2(768,656),Vector2(784,656)]),
-		PackedVector2Array([Vector2(976,240),Vector2(816,240),Vector2(816,256),Vector2(976,256)]),
-		PackedVector2Array([Vector2(976,432),Vector2(848,432),Vector2(848,512),Vector2(976,512)]),
-		PackedVector2Array([Vector2(976,256),Vector2(960,256),Vector2(960,352),Vector2(976,352)]),
-		PackedVector2Array([Vector2(1056,176),Vector2(1040,176),Vector2(1040,576),Vector2(1056,576)]),
+	# Fence walls as obstacles — rectangles computed from real 16×16 tile positions.
+	var vallas: Array[PackedVector2Array] = [
+		PackedVector2Array([Vector2(80,224),  Vector2(320,224),  Vector2(320,240),  Vector2(80,240)]),
+		PackedVector2Array([Vector2(80,240),  Vector2(96,240),   Vector2(96,496),   Vector2(80,496)]),
+		PackedVector2Array([Vector2(80,496),  Vector2(336,496),  Vector2(336,512),  Vector2(80,512)]),
+		PackedVector2Array([Vector2(160,304), Vector2(176,304),  Vector2(176,416),  Vector2(160,416)]),
+		PackedVector2Array([Vector2(160,416), Vector2(336,416),  Vector2(336,432),  Vector2(160,432)]),
+		PackedVector2Array([Vector2(240,336), Vector2(496,336),  Vector2(496,352),  Vector2(240,352)]),
+		PackedVector2Array([Vector2(304,80),  Vector2(768,80),   Vector2(768,96),   Vector2(304,96)]),
+		PackedVector2Array([Vector2(304,96),  Vector2(320,96),   Vector2(320,224),  Vector2(304,224)]),
+		PackedVector2Array([Vector2(320,512), Vector2(336,512),  Vector2(336,656),  Vector2(320,656)]),
+		PackedVector2Array([Vector2(320,656), Vector2(784,656),  Vector2(784,672),  Vector2(320,672)]),
+		PackedVector2Array([Vector2(384,160), Vector2(544,160),  Vector2(544,176),  Vector2(384,176)]),
+		PackedVector2Array([Vector2(384,176), Vector2(400,176),  Vector2(400,256),  Vector2(384,256)]),
+		PackedVector2Array([Vector2(400,416), Vector2(496,416),  Vector2(496,432),  Vector2(400,432)]),
+		PackedVector2Array([Vector2(400,496), Vector2(416,496),  Vector2(416,576),  Vector2(400,576)]),
+		PackedVector2Array([Vector2(400,576), Vector2(704,576),  Vector2(704,592),  Vector2(400,592)]),
+		PackedVector2Array([Vector2(464,176), Vector2(480,176),  Vector2(480,256),  Vector2(464,256)]),
+		PackedVector2Array([Vector2(480,432), Vector2(496,432),  Vector2(496,464),  Vector2(480,464)]),
+		PackedVector2Array([Vector2(480,480), Vector2(496,480),  Vector2(496,496),  Vector2(480,496)]),
+		PackedVector2Array([Vector2(480,496), Vector2(528,496),  Vector2(528,512),  Vector2(480,512)]),
+		PackedVector2Array([Vector2(528,96),  Vector2(544,96),   Vector2(544,160),  Vector2(528,160)]),
+		PackedVector2Array([Vector2(592,496), Vector2(624,496),  Vector2(624,512),  Vector2(592,512)]),
+		PackedVector2Array([Vector2(608,160), Vector2(1056,160), Vector2(1056,176), Vector2(608,176)]),
+		PackedVector2Array([Vector2(608,240), Vector2(752,240),  Vector2(752,256),  Vector2(608,256)]),
+		PackedVector2Array([Vector2(608,256), Vector2(624,256),  Vector2(624,288),  Vector2(608,288)]),
+		PackedVector2Array([Vector2(608,352), Vector2(624,352),  Vector2(624,464),  Vector2(608,464)]),
+		PackedVector2Array([Vector2(608,480), Vector2(624,480),  Vector2(624,496),  Vector2(608,496)]),
+		PackedVector2Array([Vector2(688,352), Vector2(976,352),  Vector2(976,368),  Vector2(688,368)]),
+		PackedVector2Array([Vector2(688,368), Vector2(704,368),  Vector2(704,576),  Vector2(688,576)]),
+		PackedVector2Array([Vector2(752,96),  Vector2(768,96),   Vector2(768,160),  Vector2(752,160)]),
+		PackedVector2Array([Vector2(768,432), Vector2(784,432),  Vector2(784,576),  Vector2(768,576)]),
+		PackedVector2Array([Vector2(768,576), Vector2(1056,576), Vector2(1056,592), Vector2(768,592)]),
+		PackedVector2Array([Vector2(768,592), Vector2(784,592),  Vector2(784,656),  Vector2(768,656)]),
+		PackedVector2Array([Vector2(816,240), Vector2(976,240),  Vector2(976,256),  Vector2(816,256)]),
+		PackedVector2Array([Vector2(848,432), Vector2(976,432),  Vector2(976,512),  Vector2(848,512)]),
+		PackedVector2Array([Vector2(960,256), Vector2(976,256),  Vector2(976,352),  Vector2(960,352)]),
+		PackedVector2Array([Vector2(1040,176),Vector2(1056,176), Vector2(1056,576), Vector2(1040,576)]),
 	]
 	for v in vallas:
-		nav_poly.add_outline(v)
+		geo.add_obstruction_outline(v)
 
-	nav_poly.make_polygons_from_outlines()
+	NavigationServer2D.bake_from_source_geometry_data(nav_poly, geo)
 
 	var nav_region = NavigationRegion2D.new()
 	nav_region.name = "NavRegion"
