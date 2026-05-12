@@ -6,7 +6,7 @@ const Maze = preload("res://scripts/Maze.gd")
 # elige una nueva dirección (evitando media vuelta).  Si el jugador
 # entra en su celda actual o adyacente, le suelta un puñetazo.
 
-const VELOCIDAD = 95.0
+const VELOCIDAD = 60.0            # más lento que el jugador (80)
 const DISTANCIA_PUÑETAZO = 56.0
 const COOLDOWN_PUÑETAZO = 3.0
 

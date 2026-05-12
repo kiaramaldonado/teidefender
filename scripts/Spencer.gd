@@ -7,7 +7,7 @@ const Maze = preload("res://scripts/Maze.gd")
 # nunca atraviesa muros porque solo elige direcciones donde la siguiente
 # celda es corredor.
 
-const VELOCIDAD = 110.0           # px/s — necesario para llegar a tiempo entre celdas
+const VELOCIDAD = 70.0            # px/s — algo más lenta que el jugador (80)
 const DISTANCIA_FLASH = 60.0
 const COOLDOWN_FLASH = 6.0
 
