@@ -9,6 +9,7 @@ const INTERVALO_DIR_MAX = 3.0
 var ultima_direccion = "down"
 var timer_flash = 0.0
 var timer_cambio = 0.0
+var timer_evitar = 0.0
 var usando_flash = false
 var jugador = null
 
@@ -19,6 +20,7 @@ func _ready():
 func _physics_process(delta):
 	timer_flash -= delta
 	timer_cambio -= delta
+	timer_evitar -= delta
 
 	if usando_flash:
 		return
@@ -31,8 +33,7 @@ func _physics_process(delta):
 			_ejecutar_flash()
 			return
 
-		# Sigue al jugador si está cerca, movimiento aleatorio si está lejos
-		if distancia < 300:
+		if distancia < 300 and timer_evitar <= 0:
 			velocity = diff.normalized() * VELOCIDAD
 		else:
 			if timer_cambio <= 0:
@@ -41,6 +42,7 @@ func _physics_process(delta):
 	var vel_antes = velocity
 	move_and_slide()
 	if vel_antes.length() > 0 and velocity.length() < vel_antes.length() * 0.3:
+		timer_evitar = 2.0
 		_nueva_direccion()
 
 	_actualizar_animacion()
