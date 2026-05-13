@@ -200,6 +200,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="MenuPausa" type="Control" parent="HUD" unique_id=441000025]
+process_mode = 2
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -214,20 +215,20 @@ color = Color(0, 0, 0, 0.6)
 
 [node name="PanelTituloPausa" type="TextureRect" parent="HUD/MenuPausa" unique_id=441000030]
 layout_mode = 0
-offset_left = 490.0
-offset_top = 220.0
-offset_right = 790.0
-offset_bottom = 295.0
+offset_left = 420.0
+offset_top = 170.0
+offset_right = 860.0
+offset_bottom = 280.0
 texture = ExtResource("5_hb7ua")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="TituloPausa" type="Label" parent="HUD/MenuPausa" unique_id=441000027]
 layout_mode = 0
-offset_left = 490.0
-offset_top = 220.0
-offset_right = 790.0
-offset_bottom = 295.0
+offset_left = 420.0
+offset_top = 170.0
+offset_right = 860.0
+offset_bottom = 280.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("6_ha0k1")
 theme_override_font_sizes/font_size = 48
@@ -237,10 +238,10 @@ vertical_alignment = 1
 
 [node name="BotonReanudar" type="Button" parent="HUD/MenuPausa" unique_id=441000028]
 layout_mode = 0
-offset_left = 490.0
-offset_top = 325.0
-offset_right = 790.0
-offset_bottom = 415.0
+offset_left = 420.0
+offset_top = 320.0
+offset_right = 860.0
+offset_bottom = 430.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("6_ha0k1")
 theme_override_font_sizes/font_size = 32
@@ -252,10 +253,10 @@ text = "Reanudar"
 
 [node name="BotonSalir" type="Button" parent="HUD/MenuPausa" unique_id=441000029]
 layout_mode = 0
-offset_left = 490.0
-offset_top = 435.0
-offset_right = 790.0
-offset_bottom = 525.0
+offset_left = 420.0
+offset_top = 460.0
+offset_right = 860.0
+offset_bottom = 570.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("6_ha0k1")
 theme_override_font_sizes/font_size = 32
