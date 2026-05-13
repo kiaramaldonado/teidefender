@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b0kyiun2deoqc" path="res://scripts/MenuPrincipal.gd" id="1_hagvj"]
 [ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="2_ltmtt"]
 [ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="3_hagvj"]
-[ext_resource type="AudioStream" uid="uid://menu_bgm_tdf" path="res://sonidos/La_vereda_alta.mp3" id="4_menu"]
+[ext_resource type="AudioStream" uid="uid://cj6xbkqwkjcsd" path="res://sonidos/La_vereda_alta.mp3" id="4_menu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mbk72"]
 font = ExtResource("3_hagvj")
@@ -28,18 +28,20 @@ texture = ExtResource("1_7pspv")
 
 [node name="BotonJugar" type="TextureButton" parent="." unique_id=632584686]
 layout_mode = 0
-offset_left = 479.0
-offset_top = 330.0
-offset_right = 863.0
-offset_bottom = 426.0
+offset_left = 429.0
+offset_top = 314.0
+offset_right = 813.0
+offset_bottom = 410.0
+scale = Vector2(1.2766871, 1.3849804)
 texture_normal = ExtResource("2_ltmtt")
 
 [node name="Texto" type="Label" parent="BotonJugar" unique_id=1108130871]
 layout_mode = 0
-offset_left = 148.0
-offset_top = 27.0
-offset_right = 242.0
-offset_bottom = 66.0
+offset_left = 152.73906
+offset_top = 28.881273
+offset_right = 246.73906
+offset_bottom = 67.88127
+scale = Vector2(1, 0.97111875)
 text = "JUGAR"
 label_settings = SubResource("LabelSettings_mbk72")
 

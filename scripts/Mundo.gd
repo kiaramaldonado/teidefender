@@ -46,7 +46,7 @@ func _ready():
 	_timer_powerup.timeout.connect(_on_timer_powerup)
 	_timer_powerup.start(randf_range(17.0, 24.0))
 
-	$HUD/Puntos.text = str(puntos)
+	$HUD/Banner/Puntos.text = str(puntos)
 	$HUD/BarraIntegridad.value = 100
 	$HUD/TimerBarraquito.visible = false
 	$HUD/PantallaBlanca.visible = false
@@ -127,7 +127,7 @@ func _spawn_basura():
 func basura_recogida():
 	puntos += 25
 	basura_en_campo -= 1
-	$HUD/Puntos.text = str(puntos)
+	$HUD/Banner/Puntos.text = str(puntos)
 	$SonidoDing.play()
 	_actualizar_integridad()
 
@@ -138,7 +138,7 @@ func jugador_recibe_daño(cantidad: int, tipo: String):
 	puntos -= cantidad
 	if puntos < 0:
 		puntos = 0
-	$HUD/Puntos.text = str(puntos)
+	$HUD/Banner/Puntos.text = str(puntos)
 
 	match tipo:
 		"punch":

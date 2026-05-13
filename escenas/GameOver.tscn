@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://djv8mvhon47gr"]
 
-[ext_resource type="Script" uid="uid://gameover02tdf" path="res://scripts/GameOver.gd" id="1_gover"]
+[ext_resource type="Script" uid="uid://h2ymucr1yxtg" path="res://scripts/GameOver.gd" id="1_gover"]
 [ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="2_gover"]
-[ext_resource type="AudioStream" uid="uid://go_sound_tdf1" path="res://sonidos/game_over.mp3" id="3_gover"]
+[ext_resource type="AudioStream" uid="uid://c8vmergwydt5n" path="res://sonidos/game_over.mp3" id="3_gover"]
 [ext_resource type="Texture2D" uid="uid://dd8yjt2h40qye" path="res://fondos/main_background.png" id="4_gover"]
 [ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="5_gover"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn"]
 texture = ExtResource("5_gover")
 texture_margin_left = 20.0
-texture_margin_right = 20.0
 texture_margin_top = 10.0
+texture_margin_right = 20.0
 texture_margin_bottom = 10.0
 
 [node name="Control" type="Control" unique_id=550000001]
@@ -27,58 +27,64 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_gover")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="PanelTitulo" type="TextureRect" parent="." unique_id=550000008]
-offset_left = 390.0
-offset_top = 30.0
-offset_right = 890.0
-offset_bottom = 110.0
+layout_mode = 0
+offset_left = 202.0
+offset_top = 116.0
+offset_right = 1076.0
+offset_bottom = 264.0
 texture = ExtResource("5_gover")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="TituloGameOver" type="Label" parent="." unique_id=550000003]
+layout_mode = 0
 offset_left = 390.0
-offset_top = 30.0
+offset_top = 154.0
 offset_right = 890.0
-offset_bottom = 110.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
+theme_override_fonts/font = ExtResource("2_gover")
+theme_override_font_sizes/font_size = 48
 text = "¡GAME OVER!"
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("2_gover")
-theme_override_font_sizes/font_size = 48
-theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 
 [node name="BotonReiniciar" type="Button" parent="." unique_id=550000005]
+layout_mode = 0
 offset_left = 390.0
 offset_top = 300.0
 offset_right = 890.0
-offset_bottom = 400.0
-text = "REINICIAR"
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
+offset_bottom = 417.0
+theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("2_gover")
 theme_override_font_sizes/font_size = 36
-theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_btn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
+theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
+text = "REINICIAR"
 
 [node name="BotonSalir" type="Button" parent="." unique_id=550000006]
+layout_mode = 0
 offset_left = 390.0
 offset_top = 430.0
 offset_right = 890.0
-offset_bottom = 530.0
-text = "SALIR"
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
+offset_bottom = 545.0
+theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("2_gover")
 theme_override_font_sizes/font_size = 36
-theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_btn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
+theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
+text = "SALIR"
 
 [node name="SonidoGameOver" type="AudioStreamPlayer" parent="." unique_id=550000007]
 stream = ExtResource("3_gover")
