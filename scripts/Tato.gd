@@ -67,6 +67,7 @@ func _ejecutar_puñetazo():
 	timer_puñetazo = COOLDOWN_PUÑETAZO
 	velocity = Vector2.ZERO
 	if jugador:
+		jugador.inmovilizado = true
 		var diff = jugador.position - position
 		if abs(diff.x) > abs(diff.y):
 			ultima_direccion = "right" if diff.x > 0 else "left"
@@ -76,6 +77,8 @@ func _ejecutar_puñetazo():
 	await $Sprite.animation_finished
 	if jugador and position.distance_to(jugador.position) < DISTANCIA_PUÑETAZO * 1.5:
 		jugador.recibir_puñetazo()
+	if jugador:
+		jugador.inmovilizado = false
 	golpeando = false
 
 func _actualizar_animacion():

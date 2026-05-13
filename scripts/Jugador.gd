@@ -8,12 +8,19 @@ var ultima_direccion = "down"
 var barraquito_activo = false
 var bebiendo = false
 var inmune = false
+var inmovilizado = false  # bloqueado durante el puñetazo de Tato
 
 func _ready():
 	add_to_group("jugador")
 
 func _physics_process(_delta):
 	if bebiendo:
+		return
+
+	if inmovilizado:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		$Sprite.play("idle_" + ultima_direccion)
 		return
 
 	var direccion = Vector2.ZERO
