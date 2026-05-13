@@ -193,6 +193,7 @@ animations = [{
 height = 32.0
 
 [node name="Homero" type="CharacterBody2D" unique_id=333333301]
+z_index = 1
 collision_layer = 4
 collision_mask = 1
 script = ExtResource("1_hmro")
