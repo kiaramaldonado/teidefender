@@ -166,6 +166,7 @@ func jugador_recibe_daño(cantidad: int, tipo: String):
 	if puntos < 0:
 		puntos = 0
 	$HUD/Banner/Puntos.text = str(puntos)
+	_flash_banner_rojo()
 
 	match tipo:
 		"punch":
@@ -175,6 +176,18 @@ func jugador_recibe_daño(cantidad: int, tipo: String):
 
 	if puntos <= 0:
 		game_over()
+
+func _flash_banner_rojo():
+	# Dos parpadeos rojos sobre el banner de puntos cuando se resta puntuación.
+	var banner: Node = $HUD/Banner
+	var rojo := Color(1.0, 0.35, 0.35, 1.0)
+	var normal := Color(1, 1, 1, 1)
+	banner.modulate = normal
+	var t := create_tween()
+	t.tween_property(banner, "modulate", rojo,   0.10)
+	t.tween_property(banner, "modulate", normal, 0.10)
+	t.tween_property(banner, "modulate", rojo,   0.10)
+	t.tween_property(banner, "modulate", normal, 0.10)
 
 func _actualizar_integridad():
 	var porcentaje = float(basura_en_campo) / float(MAX_BASURA)
