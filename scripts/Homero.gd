@@ -7,7 +7,7 @@ const Maze = preload("res://scripts/Maze.gd")
 # Cada cierto tiempo planta una violeta en la celda donde está.
 
 const VELOCIDAD = 55.0            # más lento que el jugador (80)
-const INTERVALO_VIOLETA = 12.0
+const INTERVALO_VIOLETA = 7.0     # Homero planta más a menudo
 
 var ultima_direccion = "down"
 var timer_violeta = 0.0
