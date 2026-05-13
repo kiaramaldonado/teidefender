@@ -54,6 +54,8 @@ func _ready():
 	$HUD/MenuPausa.visible = false
 
 	$HUD/BotonPausa.pressed.connect(_toggle_pausa)
+	$HUD/BotonPausa.mouse_entered.connect(func(): $HUD/BordeHoverPausa.visible = true)
+	$HUD/BotonPausa.mouse_exited.connect(func(): $HUD/BordeHoverPausa.visible = false)
 	$HUD/MenuPausa/BotonReanudar.pressed.connect(_toggle_pausa)
 	$HUD/MenuPausa/BotonSalir.pressed.connect(_ir_al_menu)
 
