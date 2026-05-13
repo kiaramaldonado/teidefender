@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://d2rsrqbfvslt3" path="res://sonidos/flash.mp3" id="15_flash"]
 [ext_resource type="AudioStream" uid="uid://c4a6ooik5ga6e" path="res://sonidos/walking_on_leaves.mp3" id="16_hojas"]
 [ext_resource type="AudioStream" uid="uid://dua7l2xeasvq1" path="res://sonidos/Rush.mp3" id="17_rush"]
+[ext_resource type="Texture2D" uid="uid://b14vxmhe516ut" path="res://sprites/ui/say_cheese.png" id="18_cheese"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ypkjc"]
 texture = ExtResource("3_0nm1d")
@@ -186,7 +187,17 @@ label_settings = SubResource("LabelSettings_timer")
 visible = false
 offset_right = 1280.0
 offset_bottom = 768.0
-color = Color(1, 1, 1, 0.85)
+color = Color(1, 1, 1, 0.96862745)
+
+[node name="ImagenFlash" type="TextureRect" parent="HUD" unique_id=441000031]
+visible = false
+offset_left = 240.0
+offset_top = 220.0
+offset_right = 1040.0
+offset_bottom = 760.0
+texture = ExtResource("18_cheese")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MenuPausa" type="Control" parent="HUD" unique_id=441000025]
 visible = false

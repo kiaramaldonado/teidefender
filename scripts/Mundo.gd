@@ -50,6 +50,7 @@ func _ready():
 	$HUD/BarraIntegridad.value = 100
 	$HUD/TimerBarraquito.visible = false
 	$HUD/PantallaBlanca.visible = false
+	$HUD/ImagenFlash.visible = false
 	$HUD/MenuPausa.visible = false
 
 	$HUD/BotonPausa.pressed.connect(_toggle_pausa)
@@ -99,10 +100,34 @@ func desactivar_barraquito_efectos():
 
 func activar_ceguera():
 	$SonidoFlash.play()
-	$HUD/PantallaBlanca.visible = true
-	await get_tree().create_timer(3.0).timeout
+	var blanca := $HUD/PantallaBlanca
+	var imagen := $HUD/ImagenFlash
+	blanca.modulate.a = 0.0
+	imagen.modulate.a = 0.0
+	blanca.visible = true
+	imagen.visible = true
+
+	# Fade-in rápido (chasquido del flash)
+	var fade_in := create_tween()
+	fade_in.set_parallel(true)
+	fade_in.tween_property(blanca, "modulate:a", 1.0, 0.15)
+	fade_in.tween_property(imagen, "modulate:a", 1.0, 0.15)
+
+	# Mantener visible
+	await get_tree().create_timer(2.2).timeout
+	if partida_terminada:
+		return
+
+	# Fade-out suave
+	var fade_out := create_tween()
+	fade_out.set_parallel(true)
+	fade_out.tween_property(blanca, "modulate:a", 0.0, 0.7)
+	fade_out.tween_property(imagen, "modulate:a", 0.0, 0.7)
+	await fade_out.finished
+
 	if not partida_terminada:
-		$HUD/PantallaBlanca.visible = false
+		blanca.visible = false
+		imagen.visible = false
 
 func _on_timer_basura():
 	_spawn_basura()
