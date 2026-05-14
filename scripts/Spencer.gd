@@ -7,7 +7,7 @@ const Maze = preload("res://scripts/Maze.gd")
 # nunca atraviesa muros porque solo elige direcciones donde la siguiente
 # celda es corredor.
 
-const VELOCIDAD = 70.0            # px/s — algo más lenta que el jugador (80)
+const VELOCIDAD_BASE = 55.0       # base; se multiplica por Mundo.factor_enemigo()
 const DISTANCIA_FLASH = 60.0
 const COOLDOWN_FLASH = 6.0
 
@@ -19,6 +19,12 @@ var jugador = null
 var _dir: Vector2i = Vector2i.ZERO       # dirección actual de avance
 var _target_cell: Vector2i = Vector2i.ZERO
 var _target_world: Vector2 = Vector2.ZERO
+
+func _velocidad_actual() -> float:
+	var m = get_parent()
+	if m and m.has_method("factor_enemigo"):
+		return VELOCIDAD_BASE * m.factor_enemigo()
+	return VELOCIDAD_BASE
 
 func _ready():
 	jugador = get_tree().get_first_node_in_group("jugador")
@@ -44,14 +50,14 @@ func _physics_process(delta):
 
 	# Avanzar hacia el target_world
 	var to_target = _target_world - global_position
-	var paso = VELOCIDAD * delta
+	var paso = _velocidad_actual() * delta
 	if to_target.length() <= paso:
 		# Llegamos a la celda destino: snap y elegir nuevo destino
 		global_position = _target_world
 		velocity = Vector2.ZERO
 		_elegir_siguiente_direccion()
 	else:
-		velocity = to_target.normalized() * VELOCIDAD
+		velocity = to_target.normalized() * _velocidad_actual()
 		move_and_slide()
 	_actualizar_animacion()
 

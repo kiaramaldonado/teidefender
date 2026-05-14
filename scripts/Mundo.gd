@@ -4,8 +4,10 @@ const BASURA_SCENE = preload("res://escenas/Basura.tscn")
 const BARRAQUITO_SCENE = preload("res://escenas/PowerUpBarraquito.tscn")
 const Maze = preload("res://scripts/Maze.gd")
 const MAX_BASURA = 24  # colchón enorme: cada bolsa baja la barra ~4 %
+const PUNTOS_POR_NIVEL = 250  # cada 250 pts sube un nivel de dificultad
 
 var puntos = 200
+var nivel_dificultad = 0   # solo sube, nunca baja
 var basura_en_campo = 0
 var partida_terminada = false
 var timer_barraquito_restante = 0.0
@@ -38,7 +40,7 @@ func _ready():
 	_timer_basura.one_shot = true
 	add_child(_timer_basura)
 	_timer_basura.timeout.connect(_on_timer_basura)
-	_timer_basura.start(randf_range(2.0, 3.0))
+	_timer_basura.start(randf_range(4.0, 5.5))   # base cómoda, escala con el nivel
 
 	_timer_powerup = Timer.new()
 	_timer_powerup.one_shot = true
@@ -133,10 +135,27 @@ func activar_ceguera():
 
 func _on_timer_basura():
 	_spawn_basura()
-	# La presión apenas crece: 4 min hasta el mínimo y el mínimo es 90 %.
-	# Con MAX_BASURA=24, hay margen de sobra incluso a este ritmo.
-	var presion = clamp(1.0 - (Time.get_ticks_msec() / 240000.0), 0.90, 1.0)
-	_timer_basura.start(randf_range(2.0, 3.0) * presion)
+	# Escalado tipo Tetris: cada nivel acorta el intervalo de aparición.
+	# El factor crece exponencialmente sin tope (a nivel 10 ≈ 3× más rápido).
+	_timer_basura.start(randf_range(4.0, 5.5) / factor_spawn())
+
+# --- Sistema de dificultad ---
+# Cada PUNTOS_POR_NIVEL puntos acumulados sube el nivel. nivel_dificultad
+# nunca baja aunque pierdas puntos, igual que el "level" de Tetris.
+
+func _actualizar_nivel():
+	var nuevo = int(puntos / PUNTOS_POR_NIVEL)
+	if nuevo > nivel_dificultad:
+		nivel_dificultad = nuevo
+
+func factor_spawn() -> float:
+	# Aparición de basura/violetas: crece sin tope (1.12^nivel).
+	return pow(1.12, nivel_dificultad)
+
+func factor_enemigo() -> float:
+	# Velocidad de los enemigos: crece más despacio y con techo (cap 1.4)
+	# para que nunca superen la velocidad del jugador (80 px/s).
+	return min(pow(1.07, nivel_dificultad), 1.4)
 
 func _on_timer_powerup():
 	_spawn_barraquito()
@@ -157,6 +176,7 @@ func basura_recogida():
 	$HUD/Banner/Puntos.text = str(puntos)
 	$SonidoDing.play()
 	_actualizar_integridad()
+	_actualizar_nivel()
 
 func violeta_pisada():
 	jugador_recibe_daño(50, "hojas")

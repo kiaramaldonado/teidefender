@@ -6,8 +6,8 @@ const Maze = preload("res://scripts/Maze.gd")
 # y en cada cruce elige una dirección al azar (evitando dar media vuelta).
 # Cada cierto tiempo planta una violeta en la celda donde está.
 
-const VELOCIDAD = 55.0            # más lento que el jugador (80)
-const INTERVALO_VIOLETA = 7.0     # Homero planta más a menudo
+const VELOCIDAD_BASE = 40.0       # base; se multiplica por Mundo.factor_enemigo()
+const INTERVALO_VIOLETA_BASE = 12.0  # se divide por factor_spawn() del Mundo
 
 var ultima_direccion = "down"
 var timer_violeta = 0.0
@@ -18,8 +18,20 @@ var _target_world: Vector2 = Vector2.ZERO
 
 const VIOLETA_SCENE = preload("res://escenas/VioletaTeide.tscn")
 
+func _velocidad_actual() -> float:
+	var m = get_parent()
+	if m and m.has_method("factor_enemigo"):
+		return VELOCIDAD_BASE * m.factor_enemigo()
+	return VELOCIDAD_BASE
+
+func _intervalo_violeta() -> float:
+	var m = get_parent()
+	if m and m.has_method("factor_spawn"):
+		return INTERVALO_VIOLETA_BASE / m.factor_spawn()
+	return INTERVALO_VIOLETA_BASE
+
 func _ready():
-	timer_violeta = INTERVALO_VIOLETA
+	timer_violeta = _intervalo_violeta()
 	var cell = Maze.world_to_cell(global_position)
 	global_position = Maze.cell_to_world(cell)
 	_target_cell = cell
@@ -30,16 +42,16 @@ func _physics_process(delta):
 	timer_violeta -= delta
 	if timer_violeta <= 0:
 		_plantar_violeta()
-		timer_violeta = INTERVALO_VIOLETA
+		timer_violeta = _intervalo_violeta()
 
 	var to_target = _target_world - global_position
-	var paso = VELOCIDAD * delta
+	var paso = _velocidad_actual() * delta
 	if to_target.length() <= paso:
 		global_position = _target_world
 		velocity = Vector2.ZERO
 		_elegir_siguiente_direccion()
 	else:
-		velocity = to_target.normalized() * VELOCIDAD
+		velocity = to_target.normalized() * _velocidad_actual()
 		move_and_slide()
 	_actualizar_animacion()
 

@@ -6,7 +6,7 @@ const Maze = preload("res://scripts/Maze.gd")
 # elige una nueva dirección (evitando media vuelta).  Si el jugador
 # entra en su celda actual o adyacente, le suelta un puñetazo.
 
-const VELOCIDAD = 60.0            # más lento que el jugador (80)
+const VELOCIDAD_BASE = 45.0       # base; se multiplica por Mundo.factor_enemigo()
 const DISTANCIA_PUÑETAZO = 56.0
 const COOLDOWN_PUÑETAZO = 3.0
 
@@ -18,6 +18,12 @@ var jugador = null
 var _dir: Vector2i = Vector2i.ZERO
 var _target_cell: Vector2i = Vector2i.ZERO
 var _target_world: Vector2 = Vector2.ZERO
+
+func _velocidad_actual() -> float:
+	var m = get_parent()
+	if m and m.has_method("factor_enemigo"):
+		return VELOCIDAD_BASE * m.factor_enemigo()
+	return VELOCIDAD_BASE
 
 func _ready():
 	jugador = get_tree().get_first_node_in_group("jugador")
@@ -38,13 +44,13 @@ func _physics_process(delta):
 			return
 
 	var to_target = _target_world - global_position
-	var paso = VELOCIDAD * delta
+	var paso = _velocidad_actual() * delta
 	if to_target.length() <= paso:
 		global_position = _target_world
 		velocity = Vector2.ZERO
 		_elegir_siguiente_direccion()
 	else:
-		velocity = to_target.normalized() * VELOCIDAD
+		velocity = to_target.normalized() * _velocidad_actual()
 		move_and_slide()
 	_actualizar_animacion()
 
