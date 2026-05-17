@@ -36,9 +36,9 @@ stretch_mode = 6
 [node name="PanelTitulo" type="TextureRect" parent="." unique_id=550000008]
 layout_mode = 0
 offset_left = 202.0
-offset_top = 116.0
+offset_top = 60.0
 offset_right = 1076.0
-offset_bottom = 264.0
+offset_bottom = 208.0
 texture = ExtResource("5_gover")
 expand_mode = 1
 stretch_mode = 6
@@ -46,9 +46,9 @@ stretch_mode = 6
 [node name="TituloGameOver" type="Label" parent="." unique_id=550000003]
 layout_mode = 0
 offset_left = 390.0
-offset_top = 154.0
+offset_top = 98.0
 offset_right = 890.0
-offset_bottom = 234.0
+offset_bottom = 178.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("2_gover")
 theme_override_font_sizes/font_size = 48
@@ -56,12 +56,42 @@ text = "¡GAME OVER!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PuntuacionFinal" type="Label" parent="." unique_id=550000010]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 230.0
+offset_right = 1080.0
+offset_bottom = 285.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_gover")
+theme_override_font_sizes/font_size = 38
+text = "Puntuación final: -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PosicionRanking" type="Label" parent="." unique_id=550000011]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 290.0
+offset_right = 1080.0
+offset_bottom = 345.0
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_gover")
+theme_override_font_sizes/font_size = 34
+text = "Subiendo puntuación..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="BotonReiniciar" type="Button" parent="." unique_id=550000005]
 layout_mode = 0
 offset_left = 390.0
-offset_top = 300.0
+offset_top = 380.0
 offset_right = 890.0
-offset_bottom = 417.0
+offset_bottom = 480.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("2_gover")
 theme_override_font_sizes/font_size = 36
@@ -71,12 +101,27 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
 theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
 text = "REINICIAR"
 
+[node name="BotonRanking" type="Button" parent="." unique_id=550000012]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 495.0
+offset_right = 890.0
+offset_bottom = 595.0
+theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
+theme_override_fonts/font = ExtResource("2_gover")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_btn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_btn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_btn")
+theme_override_styles/focus = SubResource("StyleBoxTexture_btn")
+text = "VER RANKING"
+
 [node name="BotonSalir" type="Button" parent="." unique_id=550000006]
 layout_mode = 0
 offset_left = 390.0
-offset_top = 430.0
+offset_top = 610.0
 offset_right = 890.0
-offset_bottom = 545.0
+offset_bottom = 710.0
 theme_override_colors/font_color = Color(0.35, 0.18, 0.04, 1)
 theme_override_fonts/font = ExtResource("2_gover")
 theme_override_font_sizes/font_size = 36

@@ -7,6 +7,7 @@ const MAX_BASURA = 24  # colchón enorme: cada bolsa baja la barra ~4 %
 const PUNTOS_POR_NIVEL = 250  # cada 250 pts sube un nivel de dificultad
 
 var puntos = 200
+var puntos_max = 200       # mejor puntuación alcanzada en la partida
 var nivel_dificultad = 0   # solo sube, nunca baja
 var basura_en_campo = 0
 var partida_terminada = false
@@ -189,6 +190,8 @@ func _spawn_basura():
 
 func basura_recogida():
 	puntos += 25
+	if puntos > puntos_max:
+		puntos_max = puntos
 	basura_en_campo -= 1
 	$HUD/Banner/Puntos.text = str(puntos)
 	$SonidoDing.play()
@@ -299,6 +302,10 @@ func game_over():
 	get_tree().paused = false
 	$BGM.stop()
 	$SonidoRush.stop()
+	# Guardar la mejor puntuación alcanzada en la partida (no la final).
+	# Así aunque el jugador termine en 0 puntos, su mejor momento queda
+	# registrado en el ranking.
+	PlayerSession.last_score = puntos_max
 	get_tree().change_scene_to_file("res://escenas/GameOver.tscn")
 
 func _spawn_barraquito():
