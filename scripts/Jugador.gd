@@ -67,16 +67,22 @@ func activar_barraquito():
 	$Sprite.play("drink")
 	await $Sprite.animation_finished
 	bebiendo = false
+	# Mundo es quien controla el contador y decide cuándo parar el efecto.
+	# Al beber otro barraquito mientras estás bajo el primero, Mundo suma
+	# 8 s al tiempo restante (en vez de resetearlo).
+	get_parent().activar_barraquito_efectos()
+
+func activar_efecto_barraquito():
+	# Llamado por Mundo cuando empieza un nuevo "ciclo" de barraquito.
 	barraquito_activo = true
 	inmune = true
 	velocidad_actual = VELOCIDAD_BOOST
-	get_parent().activar_barraquito_efectos()
 
-	await get_tree().create_timer(8.0).timeout
+func desactivar_efecto_barraquito():
+	# Llamado por Mundo cuando expira el contador acumulado.
 	barraquito_activo = false
 	inmune = false
 	velocidad_actual = VELOCIDAD_NORMAL
-	get_parent().desactivar_barraquito_efectos()
 
 func recibir_puñetazo():
 	if inmune:

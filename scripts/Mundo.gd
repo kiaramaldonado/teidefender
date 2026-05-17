@@ -81,8 +81,7 @@ func _process(delta):
 		if timer_barraquito_restante > 0:
 			$HUD/TimerBarraquito.text = "Barraquito: " + str(snapped(timer_barraquito_restante, 0.1)) + "s"
 		else:
-			$HUD/TimerBarraquito.visible = false
-			barraquito_corriendo = false
+			desactivar_barraquito_efectos()
 
 func _toggle_pausa():
 	get_tree().paused = !get_tree().paused
@@ -94,13 +93,24 @@ func _ir_al_menu():
 
 func activar_barraquito_efectos():
 	$SonidoBarraquito.play()
-	barraquito_corriendo = true
-	timer_barraquito_restante = 8.0
-	$HUD/TimerBarraquito.visible = true
+	# Si ya hay un barraquito activo, el nuevo SUMA tiempo; si no, arranca.
+	if barraquito_corriendo:
+		timer_barraquito_restante += 8.0
+	else:
+		timer_barraquito_restante = 8.0
+		barraquito_corriendo = true
+		$HUD/TimerBarraquito.visible = true
+		var j = get_tree().get_first_node_in_group("jugador")
+		if j and j.has_method("activar_efecto_barraquito"):
+			j.activar_efecto_barraquito()
 
 func desactivar_barraquito_efectos():
+	# Disparado por _process cuando el contador llega a 0.
 	barraquito_corriendo = false
 	$HUD/TimerBarraquito.visible = false
+	var j = get_tree().get_first_node_in_group("jugador")
+	if j and j.has_method("desactivar_efecto_barraquito"):
+		j.desactivar_efecto_barraquito()
 
 func activar_ceguera():
 	$SonidoFlash.play()
