@@ -21,6 +21,13 @@ var spawn_points: Array[Vector2] = []
 var _timer_basura: Timer
 var _timer_powerup: Timer
 
+# Tweens que parpadean en rojo de forma continua cuando los recursos
+# están bajos. Se mantienen guardados para poder iniciarlos/pararlos.
+var _flash_integridad_tween: Tween
+var _flash_puntos_tween: Tween
+const UMBRAL_INTEGRIDAD_BAJA := 0.25  # parpadea cuando queda ≤ 25 %
+const UMBRAL_PUNTOS_BAJOS := 150
+
 func _ready():
 	# Construir spawn_points como todos los centros de celda de corredor,
 	# excepto las celdas iniciales de los personajes.
@@ -187,6 +194,7 @@ func basura_recogida():
 	$SonidoDing.play()
 	_actualizar_integridad()
 	_actualizar_nivel()
+	_actualizar_parpadeo_puntos()
 
 func violeta_pisada():
 	jugador_recibe_daño(50, "hojas")
@@ -208,7 +216,11 @@ func jugador_recibe_daño(cantidad: int, tipo: String):
 		game_over()
 
 func _flash_banner_rojo():
-	# Dos parpadeos rojos sobre el banner de puntos cuando se resta puntuación.
+	# Dos parpadeos rojos discretos al recibir daño. Pausa el parpadeo
+	# continuo (si está activo) y al terminar lo reactiva si procede.
+	if _flash_puntos_tween and _flash_puntos_tween.is_valid():
+		_flash_puntos_tween.kill()
+		_flash_puntos_tween = null
 	var banner: Node = $HUD/Banner
 	var rojo := Color(1.0, 0.35, 0.35, 1.0)
 	var normal := Color(1, 1, 1, 1)
@@ -218,10 +230,56 @@ func _flash_banner_rojo():
 	t.tween_property(banner, "modulate", normal, 0.10)
 	t.tween_property(banner, "modulate", rojo,   0.10)
 	t.tween_property(banner, "modulate", normal, 0.10)
+	t.finished.connect(_actualizar_parpadeo_puntos)
+
+# --- Parpadeos continuos en rojo cuando un recurso está bajo ---
+
+func _actualizar_parpadeo_puntos():
+	if puntos < UMBRAL_PUNTOS_BAJOS:
+		_iniciar_parpadeo_puntos()
+	else:
+		_detener_parpadeo_puntos()
+
+func _iniciar_parpadeo_puntos():
+	if _flash_puntos_tween and _flash_puntos_tween.is_valid():
+		return
+	var banner = $HUD/Banner
+	_flash_puntos_tween = create_tween().set_loops()
+	_flash_puntos_tween.tween_property(banner, "modulate", Color(1, 0.45, 0.45, 1), 0.45)
+	_flash_puntos_tween.tween_property(banner, "modulate", Color(1, 1, 1, 1), 0.45)
+
+func _detener_parpadeo_puntos():
+	if _flash_puntos_tween:
+		_flash_puntos_tween.kill()
+		_flash_puntos_tween = null
+	$HUD/Banner.modulate = Color(1, 1, 1, 1)
+
+func _iniciar_parpadeo_integridad():
+	if _flash_integridad_tween and _flash_integridad_tween.is_valid():
+		return
+	var bar = $HUD/BarraIntegridad
+	# Rojo intenso + ciclo más rápido para que se note bien sobre el estilo
+	# por defecto del ProgressBar.
+	_flash_integridad_tween = create_tween().set_loops()
+	_flash_integridad_tween.tween_property(bar, "modulate", Color(1.0, 0.15, 0.15, 1), 0.28)
+	_flash_integridad_tween.tween_property(bar, "modulate", Color(1, 1, 1, 1),         0.28)
+
+func _detener_parpadeo_integridad():
+	if _flash_integridad_tween:
+		_flash_integridad_tween.kill()
+		_flash_integridad_tween = null
+	$HUD/BarraIntegridad.modulate = Color(1, 1, 1, 1)
 
 func _actualizar_integridad():
 	var porcentaje = float(basura_en_campo) / float(MAX_BASURA)
-	$HUD/BarraIntegridad.value = 100.0 * (1.0 - porcentaje)
+	var integridad = 1.0 - porcentaje
+	$HUD/BarraIntegridad.value = 100.0 * integridad
+
+	# Parpadeo rojo continuo cuando la salud del parque está por debajo del 25 %.
+	if integridad < UMBRAL_INTEGRIDAD_BAJA:
+		_iniciar_parpadeo_integridad()
+	else:
+		_detener_parpadeo_integridad()
 
 	if basura_en_campo >= MAX_BASURA:
 		game_over()
