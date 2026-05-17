@@ -3,51 +3,43 @@ extends Node
 # Autoload: configura SilentWolf al arrancar y guarda los datos de la
 # sesión (nombre del jugador, última puntuación, última posición) para
 # que estén disponibles entre escenas.
+#
+# Las credenciales de SilentWolf (api_key, game_id) NO van en el código
+# fuente: se leen de config/silent_wolf.cfg, archivo ignorado por git.
+# Usa config/silent_wolf.cfg.example como plantilla.
 
-const API_KEY := "wlFtgLp8y11CG848G1HmN8FpdgFrd8o03Qw5BnAy"
-const GAME_ID := "Teidefender"
-const GAME_VERSION := "1.0.0"
+const CONFIG_PATH := "res://config/silent_wolf.cfg"
 
 var player_name: String = ""
 var last_score: int = 0
 var last_position: int = -1   # -1 = aún sin calcular
+var ranking_disponible: bool = false
 
 func _ready():
-	# Configurar SilentWolf una sola vez al inicio del juego
-	if Engine.has_singleton("SilentWolf") or get_node_or_null("/root/SilentWolf") != null:
-		SilentWolf.configure({
-			"api_key": API_KEY,
-			"game_id": GAME_ID,
-			"game_version": GAME_VERSION,
-			"log_level": 2,   # debug: ver logs completos en consola
-		})
-		_test_connection()
-	else:
-		push_warning("PlayerSession: autoload 'SilentWolf' no encontrado. Asegúrate de instalar el addon en res://addons/silent_wolf/")
+	if get_node_or_null("/root/SilentWolf") == null:
+		push_warning("PlayerSession: autoload 'SilentWolf' no encontrado. Instala el addon en res://addons/silent_wolf/")
+		return
+	_configurar_silent_wolf()
 
-# Lanza una petición simple al arrancar para diagnosticar si Godot puede
-# hablar con el backend de SilentWolf. Imprime el response_code en consola.
-func _test_connection():
-	var http := HTTPRequest.new()
-	http.timeout = 6.0
-	add_child(http)
-	http.request_completed.connect(func(_r, code, _h, body):
-		var snippet: String = "(vacío)"
-		if body.size() > 0:
-			snippet = body.get_string_from_utf8().left(120)
-		print("[PlayerSession] Test SilentWolf — HTTP code: %d  body: %s" % [code, snippet])
-		http.queue_free()
-	)
-	var url := "https://api.silentwolf.com/get_scores/%s?max=1&ldboard_name=main&period_offset=0" % GAME_ID
-	var headers := [
-		"x-api-key: " + API_KEY,
-		"x-sw-game-id: " + GAME_ID,
-		"x-sw-plugin-version: 0.6.4",
-		"x-sw-godot-version: 4.6",
-	]
-	var err := http.request(url, headers)
-	if err != OK:
-		print("[PlayerSession] Test SilentWolf — error al lanzar request: ", err)
+func _configurar_silent_wolf():
+	var cfg := ConfigFile.new()
+	if cfg.load(CONFIG_PATH) != OK:
+		push_warning("PlayerSession: %s no encontrado. El ranking estará deshabilitado. Copia config/silent_wolf.cfg.example para activarlo." % CONFIG_PATH)
+		return
+
+	var api_key = cfg.get_value("silent_wolf", "api_key", "")
+	var game_id = cfg.get_value("silent_wolf", "game_id", "")
+	if api_key == "" or game_id == "" or api_key.begins_with("PON_AQUI"):
+		push_warning("PlayerSession: %s incompleto (api_key / game_id sin rellenar)." % CONFIG_PATH)
+		return
+
+	SilentWolf.configure({
+		"api_key": api_key,
+		"game_id": game_id,
+		"game_version": cfg.get_value("silent_wolf", "game_version", "1.0.0"),
+		"log_level": cfg.get_value("silent_wolf", "log_level", 1),
+	})
+	ranking_disponible = true
 
 # Espera una señal con timeout. Si la señal no se emite antes del tiempo
 # indicado, devuelve null. Se usa para llamadas a SilentWolf, que en caso

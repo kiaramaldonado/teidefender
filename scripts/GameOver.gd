@@ -14,6 +14,10 @@ func _ready():
 	_subir_y_mostrar_posicion()
 
 func _subir_y_mostrar_posicion():
+	if not PlayerSession.ranking_disponible:
+		$PosicionRanking.text = "(ranking no configurado)"
+		return
+
 	var nombre = PlayerSession.player_name
 	var puntos = PlayerSession.last_score
 	if nombre.is_empty():

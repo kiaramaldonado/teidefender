@@ -1,0 +1,14 @@
+; Plantilla de configuración para SilentWolf.
+;
+; Copia este archivo como  config/silent_wolf.cfg  (sin .example) y
+; rellena tu API key y game id reales. El archivo final está ignorado
+; por git para que tus credenciales no acaben en el repo.
+;
+; Si no existe el archivo, el juego funcionará pero el ranking estará
+; deshabilitado (no se podrán subir ni consultar puntuaciones).
+
+[silent_wolf]
+api_key = "PON_AQUI_TU_API_KEY"
+game_id = "PON_AQUI_TU_GAME_ID"
+game_version = "1.0.0"
+log_level = 1

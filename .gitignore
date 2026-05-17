@@ -1,3 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Credenciales/keys que no deben quedar en VCS
+config/silent_wolf.cfg

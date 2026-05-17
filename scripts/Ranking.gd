@@ -20,6 +20,10 @@ func _cargar_ranking():
 	$PanelLista/Estado.visible = true
 	$PanelLista/ScrollLista.visible = false
 
+	if not PlayerSession.ranking_disponible:
+		$PanelLista/Estado.text = "Ranking no configurado.\nFalta config/silent_wolf.cfg."
+		return
+
 	# Top 20.  Si no hay internet la señal nunca se emite, así que usamos
 	# un timeout para evitar quedarnos colgados eternamente.
 	SilentWolf.Scores.get_scores(20)
