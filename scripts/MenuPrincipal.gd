@@ -1,20 +1,30 @@
 extends Control
 
-const COLOR_NORMAL := Color(0.23, 0.13202, 0.066700004, 1)
-const COLOR_HOVER := Color(1, 1, 1, 1)
-
 func _ready():
 	$BotonJugar.pressed.connect(_on_boton_jugar_pressed)
-	$BotonJugar.mouse_entered.connect(_on_jugar_hover_in)
-	$BotonJugar.mouse_exited.connect(_on_jugar_hover_out)
+	$BotonRanking.pressed.connect(_on_boton_ranking_pressed)
 	$BGM.finished.connect(func(): $BGM.play())
 	$BGM.play()
 
+	# Recuperar el último nombre escrito si volvemos al menú dentro de la
+	# misma sesión.
+	$NombreInput.text = PlayerSession.player_name
+	$NombreInput.text_changed.connect(_on_nombre_changed)
+	_actualizar_estado_botones()
+
+func _on_nombre_changed(_t: String):
+	_actualizar_estado_botones()
+
+func _actualizar_estado_botones():
+	# JUGAR solo se habilita cuando hay un nombre escrito.
+	$BotonJugar.disabled = $NombreInput.text.strip_edges().is_empty()
+
 func _on_boton_jugar_pressed():
+	var nombre = $NombreInput.text.strip_edges()
+	if nombre.is_empty():
+		return
+	PlayerSession.player_name = nombre
 	get_tree().change_scene_to_file("res://escenas/Mundo.tscn")
 
-func _on_jugar_hover_in():
-	$BotonJugar/Texto.label_settings.font_color = COLOR_HOVER
-
-func _on_jugar_hover_out():
-	$BotonJugar/Texto.label_settings.font_color = COLOR_NORMAL
+func _on_boton_ranking_pressed():
+	get_tree().change_scene_to_file("res://escenas/Ranking.tscn")

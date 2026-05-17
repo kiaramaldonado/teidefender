@@ -4,12 +4,14 @@
 [ext_resource type="Script" uid="uid://b0kyiun2deoqc" path="res://scripts/MenuPrincipal.gd" id="1_hagvj"]
 [ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="2_ltmtt"]
 [ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="3_hagvj"]
-[ext_resource type="AudioStream" path="res://sonidos/bgm_menu.mp3" id="4_menu"]
+[ext_resource type="AudioStream" uid="uid://im2vew76mcuw" path="res://sonidos/bgm_menu.mp3" id="4_menu"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_mbk72"]
-font = ExtResource("3_hagvj")
-font_size = 32
-font_color = Color(0.23, 0.13202, 0.066700004, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_banner"]
+texture = ExtResource("2_ltmtt")
+texture_margin_left = 28.0
+texture_margin_top = 14.0
+texture_margin_right = 28.0
+texture_margin_bottom = 14.0
 
 [node name="Control" type="Control" unique_id=1167554696]
 layout_mode = 3
@@ -21,29 +23,69 @@ grow_vertical = 2
 script = ExtResource("1_hagvj")
 
 [node name="Fondo" type="TextureRect" parent="." unique_id=543970480]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_7pspv")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="BotonJugar" type="TextureButton" parent="." unique_id=632584686]
+[node name="NombreInput" type="LineEdit" parent="." unique_id=660000010]
 layout_mode = 0
-offset_left = 429.0
-offset_top = 314.0
-offset_right = 813.0
-offset_bottom = 410.0
-scale = Vector2(1.2766871, 1.3849804)
-texture_normal = ExtResource("2_ltmtt")
+offset_left = 395.0
+offset_top = 296.0
+offset_right = 892.0
+offset_bottom = 387.0
+theme_override_colors/font_color = Color(0.23, 0.132, 0.067, 1)
+theme_override_colors/font_placeholder_color = Color(0.4, 0.32, 0.22, 0.7)
+theme_override_fonts/font = ExtResource("3_hagvj")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxTexture_banner")
+theme_override_styles/focus = SubResource("StyleBoxTexture_banner")
+placeholder_text = "TU NOMBRE"
+alignment = 1
+max_length = 20
 
-[node name="Texto" type="Label" parent="BotonJugar" unique_id=1108130871]
+[node name="BotonJugar" type="Button" parent="." unique_id=632584686]
 layout_mode = 0
-offset_left = 152.73906
-offset_top = 28.881273
-offset_right = 246.73906
-offset_bottom = 67.88127
-scale = Vector2(1, 0.97111875)
+offset_left = 396.0
+offset_top = 375.0
+offset_right = 888.0
+offset_bottom = 480.0
+theme_override_colors/font_color = Color(0.23, 0.132, 0.067, 1)
+theme_override_colors/font_focus_color = Color(0.23, 0.132, 0.067, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.45, 0.35, 0.25, 0.7)
+theme_override_fonts/font = ExtResource("3_hagvj")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_banner")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_banner")
+theme_override_styles/hover = SubResource("StyleBoxTexture_banner")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_banner")
+theme_override_styles/focus = SubResource("StyleBoxTexture_banner")
 text = "JUGAR"
-label_settings = SubResource("LabelSettings_mbk72")
+
+[node name="BotonRanking" type="Button" parent="." unique_id=660000011]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 463.0
+offset_right = 887.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0.23, 0.132, 0.067, 1)
+theme_override_colors/font_focus_color = Color(0.23, 0.132, 0.067, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_hagvj")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_banner")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_banner")
+theme_override_styles/hover = SubResource("StyleBoxTexture_banner")
+theme_override_styles/focus = SubResource("StyleBoxTexture_banner")
+text = "RANKING"
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=660000001]
 stream = ExtResource("4_menu")
