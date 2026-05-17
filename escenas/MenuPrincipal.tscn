@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://b0kyiun2deoqc" path="res://scripts/MenuPrincipal.gd" id="1_hagvj"]
 [ext_resource type="Texture2D" uid="uid://c51dky78d14vk" path="res://sprites/ui/point_banner.png" id="2_ltmtt"]
 [ext_resource type="FontFile" uid="uid://wkjyh32ntvxp" path="res://fuentes/PixelifySans-VariableFont_wght.ttf" id="3_hagvj"]
-[ext_resource type="AudioStream" uid="uid://im2vew76mcuw" path="res://sonidos/bgm_menu.mp3" id="4_menu"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_banner"]
 texture = ExtResource("2_ltmtt")
@@ -86,6 +85,3 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_banner")
 theme_override_styles/hover = SubResource("StyleBoxTexture_banner")
 theme_override_styles/focus = SubResource("StyleBoxTexture_banner")
 text = "RANKING"
-
-[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=660000001]
-stream = ExtResource("4_menu")

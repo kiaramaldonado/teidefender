@@ -73,6 +73,8 @@ func _ready():
 		if rush_activo:
 			$SonidoRush.play()
 	)
+	# Parar la música del menú: en partida suena la banda sonora propia.
+	MenuMusic.stop()
 	$BGM.finished.connect(func(): $BGM.play())
 	$BGM.play()
 

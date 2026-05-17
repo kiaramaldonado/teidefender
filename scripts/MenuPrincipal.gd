@@ -3,8 +3,9 @@ extends Control
 func _ready():
 	$BotonJugar.pressed.connect(_on_boton_jugar_pressed)
 	$BotonRanking.pressed.connect(_on_boton_ranking_pressed)
-	$BGM.finished.connect(func(): $BGM.play())
-	$BGM.play()
+	# La música del menú la gestiona el autoload MenuMusic; aquí solo
+	# nos aseguramos de que esté sonando (no-op si ya lo está).
+	MenuMusic.play()
 
 	# Recuperar el último nombre escrito si volvemos al menú dentro de la
 	# misma sesión.

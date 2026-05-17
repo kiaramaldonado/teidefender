@@ -7,6 +7,8 @@ const COLOR_FILA := Color(1, 1, 1, 1)
 const COLOR_FILA_JUGADOR := Color(1, 0.9, 0.3, 1)  # destaca al jugador actual
 
 func _ready():
+	# Asegurar que la música del menú esté sonando (no-op si ya suena).
+	MenuMusic.play()
 	$BotonVolver.pressed.connect(_volver_al_menu)
 	_cargar_ranking()
 
