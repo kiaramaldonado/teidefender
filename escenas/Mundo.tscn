@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c4l6yyq61mpdn" path="res://escenas/Tato.tscn" id="8_tato"]
 [ext_resource type="PackedScene" uid="uid://c8q5x530q8ccd" path="res://escenas/Spencer.tscn" id="9_spnc"]
 [ext_resource type="PackedScene" uid="uid://homero001tdf" path="res://escenas/Homero.tscn" id="10_hmro"]
-[ext_resource type="AudioStream" uid="uid://cj6xbkqwkjcsd" path="res://sonidos/La_vereda_alta.mp3" id="11_bgm"]
+[ext_resource type="AudioStream" path="res://sonidos/bgm_juego.mp3" id="11_bgm"]
 [ext_resource type="AudioStream" uid="uid://bya5xaumymd8s" path="res://sonidos/ding.mp3" id="12_ding"]
 [ext_resource type="AudioStream" uid="uid://bqklnkspfju1m" path="res://sonidos/power.mp3" id="13_power"]
 [ext_resource type="AudioStream" uid="uid://c0biu7p2jppmd" path="res://sonidos/punch.mp3" id="14_punch"]
