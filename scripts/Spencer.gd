@@ -97,10 +97,14 @@ func _ejecutar_flash():
 			ultima_direccion = "right" if diff.x > 0 else "left"
 		else:
 			ultima_direccion = "down" if diff.y > 0 else "up"
+	# Primero se ve la animación de Spencer haciendo la foto, y SÓLO al
+	# terminar disparamos el "flash" (pantalla blanca + Say Cheese sobre
+	# el jugador). Antes los dos efectos ocurrían a la vez y tapaban a
+	# Spencer.
 	$Sprite.play("flash_" + ultima_direccion)
+	await $Sprite.animation_finished
 	if jugador:
 		jugador.recibir_flash()
-	await $Sprite.animation_finished
 	usando_flash = false
 
 func _actualizar_animacion():
