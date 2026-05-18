@@ -4,3 +4,6 @@
 
 # Credenciales/keys que no deben quedar en VCS
 config/silent_wolf.cfg
+
+# Carpeta de exports (HTML5, Android, etc.)
+build/
