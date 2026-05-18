@@ -12,6 +12,10 @@ texture_margin_top = 14.0
 texture_margin_right = 28.0
 texture_margin_bottom = 14.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_hagvj"]
+font = ExtResource("3_hagvj")
+font_size = 30
+
 [node name="Control" type="Control" unique_id=1167554696]
 layout_mode = 3
 anchors_preset = 15
@@ -85,3 +89,24 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_banner")
 theme_override_styles/hover = SubResource("StyleBoxTexture_banner")
 theme_override_styles/focus = SubResource("StyleBoxTexture_banner")
 text = "RANKING"
+
+[node name="Label" type="Label" parent="." unique_id=213585593]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 670.0
+offset_right = 1258.0
+offset_bottom = 707.0
+text = "© Kiara Maldonado | 2026"
+label_settings = SubResource("LabelSettings_hagvj")
+
+[node name="LinkButton" type="LinkButton" parent="." unique_id=1355522596]
+layout_mode = 0
+offset_left = 807.0
+offset_top = 712.0
+offset_right = 1256.0
+offset_bottom = 752.0
+theme_override_fonts/font = ExtResource("3_hagvj")
+theme_override_font_sizes/font_size = 25
+text = "Visita kiaramaldonado.com para más"
+underline = 1
+uri = "www.kiaramaldonado.com"
