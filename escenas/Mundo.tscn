@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://c4a6ooik5ga6e" path="res://sonidos/walking_on_leaves.mp3" id="16_hojas"]
 [ext_resource type="AudioStream" uid="uid://dua7l2xeasvq1" path="res://sonidos/Rush.mp3" id="17_rush"]
 [ext_resource type="Texture2D" uid="uid://b14vxmhe516ut" path="res://sprites/ui/say_cheese.png" id="18_cheese"]
+[ext_resource type="AudioStream" uid="uid://b00w8dp0h7cjr" path="res://sonidos/countdown.mp3" id="19_countdown"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ypkjc"]
 texture = ExtResource("3_0nm1d")
@@ -137,6 +138,10 @@ stream = ExtResource("16_hojas")
 
 [node name="SonidoRush" type="AudioStreamPlayer" parent="." unique_id=441000016]
 stream = ExtResource("17_rush")
+
+[node name="SonidoCuentaAtras" type="AudioStreamPlayer" parent="." unique_id=441000017]
+process_mode = 3
+stream = ExtResource("19_countdown")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=399497779]
 
@@ -285,3 +290,19 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_pausa")
 theme_override_styles/hover = SubResource("StyleBoxTexture_pausa")
 theme_override_styles/focus = SubResource("StyleBoxTexture_pausa")
 text = "SALIR AL MENÚ"
+
+[node name="CuentaAtras" type="Label" parent="HUD" unique_id=441000040]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 384)
+theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = ExtResource("6_ha0k1")
+theme_override_font_sizes/font_size = 160
+horizontal_alignment = 1
+vertical_alignment = 1

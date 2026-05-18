@@ -21,6 +21,12 @@ const INTERVALO_POWERUP := Vector2(17.0, 24.0)
 const DURACION_BARRAQUITO := 8.0  # se acumula si bebes otro
 const DURACION_FLASH := 2.2       # ceguera visible tras el chasquido inicial
 
+# Cuenta atrás inicial (sincronizada con sonidos/countdown.mp3 ≈ 4 s)
+const CUENTA_ATRAS_TEXTOS := ["3", "2", "1", "¡Vamos!"]
+const CUENTA_ATRAS_INTERVALO := 1.0
+const CUENTA_ATRAS_ESCALA_INICIAL := Vector2(2.5, 2.5)
+const CUENTA_ATRAS_ESCALA_FINAL := Vector2(0.7, 0.7)
+
 # Avisos visuales cuando los recursos están bajos
 const UMBRAL_INTEGRIDAD_BAJA := 0.25  # < 25 % salud parque
 const UMBRAL_PUNTOS_BAJOS := 150
@@ -62,6 +68,11 @@ func _ready():
 
 	for _i in range(BASURA_INICIAL):
 		_spawn_basura()
+
+	# Cuenta atrás antes de empezar: la escena se ve pero está pausada.
+	# Cuando termina, se reanuda y arranca la BSO.
+	await _cuenta_atras_inicial()
+	$BGM.play()
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -125,8 +136,8 @@ func _inicializar_audio():
 	)
 	$BGM.finished.connect(func(): $BGM.play())
 	# En partida suena la BSO propia; paramos la música del menú.
+	# (La BSO no arranca aquí, lo hará al terminar la cuenta atrás.)
 	MenuMusic.stop()
-	$BGM.play()
 
 
 # ============================================================================
@@ -352,3 +363,33 @@ func game_over():
 	# en 0 puntos, su mejor momento queda registrado en el ranking.
 	PlayerSession.last_score = puntos_max
 	get_tree().change_scene_to_file("res://escenas/GameOver.tscn")
+
+
+# ============================================================================
+# Cuenta atrás inicial
+# ============================================================================
+
+func _cuenta_atras_inicial():
+	# Pausamos el árbol para que la escena quede congelada (enemigos, timers
+	# y físicas paradas). El Label y el AudioStreamPlayer del countdown
+	# tienen process_mode = ALWAYS para seguir funcionando.
+	get_tree().paused = true
+	$SonidoCuentaAtras.play()
+	for texto in CUENTA_ATRAS_TEXTOS:
+		_animar_numero_cuenta_atras(texto)
+		await get_tree().create_timer(CUENTA_ATRAS_INTERVALO).timeout
+	$HUD/CuentaAtras.visible = false
+	get_tree().paused = false
+
+func _animar_numero_cuenta_atras(texto: String):
+	var label := $HUD/CuentaAtras
+	label.text = texto
+	label.scale = CUENTA_ATRAS_ESCALA_INICIAL
+	label.modulate = COLOR_BLANCO
+	label.visible = true
+	# Tween anclado al propio Label (PROCESS_MODE_ALWAYS) para que la
+	# animación se ejecute aunque el árbol esté pausado.
+	var t := label.create_tween()
+	t.set_parallel(true)
+	t.tween_property(label, "scale", CUENTA_ATRAS_ESCALA_FINAL, CUENTA_ATRAS_INTERVALO * 0.9)
+	t.tween_property(label, "modulate:a", 0.0, CUENTA_ATRAS_INTERVALO * 0.85).set_delay(CUENTA_ATRAS_INTERVALO * 0.1)
