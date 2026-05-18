@@ -17,7 +17,6 @@ var usando_flash = false
 var jugador = null
 
 var _dir: Vector2i = Vector2i.ZERO       # dirección actual de avance
-var _target_cell: Vector2i = Vector2i.ZERO
 var _target_world: Vector2 = Vector2.ZERO
 
 func _velocidad_actual() -> float:
@@ -28,10 +27,8 @@ func _velocidad_actual() -> float:
 
 func _ready():
 	jugador = get_tree().get_first_node_in_group("jugador")
-	# Alinear posición inicial a una celda y elegir primer destino
-	var cell = Maze.world_to_cell(global_position)
-	global_position = Maze.cell_to_world(cell)
-	_target_cell = cell
+	# Alinear posición inicial al centro de la celda y elegir primer destino.
+	global_position = Maze.cell_to_world(Maze.world_to_cell(global_position))
 	_target_world = global_position
 	_elegir_siguiente_direccion()
 
@@ -64,22 +61,19 @@ func _physics_process(delta):
 func _elegir_siguiente_direccion():
 	# Spencer: BFS hacia la celda del jugador.
 	var aqui = Maze.world_to_cell(global_position)
-	_target_cell = aqui
 	var celda_jugador = Maze.world_to_cell(jugador.global_position) if jugador else aqui
-	# Asegurar que la celda objetivo del jugador es válida; si no, buscar la más cercana
 	if not Maze.is_corridor(celda_jugador):
 		celda_jugador = _celda_corredor_mas_cercana(jugador.global_position)
 	var dir = Maze.direction_towards(aqui, celda_jugador)
 	if dir == Vector2i.ZERO:
-		# Ya está en la misma celda o no hay camino: elegir cualquier vecino válido
+		# Mismo punto o sin camino: elegir cualquier vecino válido.
 		var vecinos = Maze.neighbours(aqui)
-		if vecinos.size() == 0:
+		if vecinos.is_empty():
 			_target_world = global_position
 			return
 		dir = vecinos[randi() % vecinos.size()]
 	_dir = dir
-	_target_cell = aqui + _dir
-	_target_world = Maze.cell_to_world(_target_cell)
+	_target_world = Maze.cell_to_world(aqui + _dir)
 
 func _celda_corredor_mas_cercana(world_pos: Vector2) -> Vector2i:
 	# Recorre todas las celdas de corredor y elige la más cercana al jugador.

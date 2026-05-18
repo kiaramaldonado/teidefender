@@ -12,11 +12,10 @@ const INTERVALO_VIOLETA_BASE = 12.0  # se divide por factor_spawn() del Mundo
 var ultima_direccion = "down"
 var timer_violeta = 0.0
 
-var _dir: Vector2i = Vector2i.ZERO
-var _target_cell: Vector2i = Vector2i.ZERO
-var _target_world: Vector2 = Vector2.ZERO
-
 const VIOLETA_SCENE = preload("res://escenas/VioletaTeide.tscn")
+
+var _dir: Vector2i = Vector2i.ZERO
+var _target_world: Vector2 = Vector2.ZERO
 
 func _velocidad_actual() -> float:
 	var m = get_parent()
@@ -32,9 +31,7 @@ func _intervalo_violeta() -> float:
 
 func _ready():
 	timer_violeta = _intervalo_violeta()
-	var cell = Maze.world_to_cell(global_position)
-	global_position = Maze.cell_to_world(cell)
-	_target_cell = cell
+	global_position = Maze.cell_to_world(Maze.world_to_cell(global_position))
 	_target_world = global_position
 	_elegir_siguiente_direccion()
 
@@ -58,17 +55,15 @@ func _physics_process(delta):
 func _elegir_siguiente_direccion():
 	var aqui = Maze.world_to_cell(global_position)
 	var vecinos = Maze.neighbours(aqui)
-	if vecinos.size() == 0:
+	if vecinos.is_empty():
 		_target_world = global_position
 		return
-	# Evitar dar media vuelta si hay alternativas
-	var reverso = -_dir
+	# Evitar dar media vuelta si hay alternativas.
 	var opciones = vecinos.duplicate()
-	if vecinos.size() > 1 and reverso in opciones:
-		opciones.erase(reverso)
+	if vecinos.size() > 1 and -_dir in opciones:
+		opciones.erase(-_dir)
 	_dir = opciones[randi() % opciones.size()]
-	_target_cell = aqui + _dir
-	_target_world = Maze.cell_to_world(_target_cell)
+	_target_world = Maze.cell_to_world(aqui + _dir)
 
 func _plantar_violeta():
 	var violeta = VIOLETA_SCENE.instantiate()
