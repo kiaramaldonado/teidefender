@@ -13,7 +13,7 @@ config_version=5
 config/name="Teidefender"
 run/main_scene="uid://cj7s3hyipaqdn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://teidefender_logo.png"
 
 [autoload]
 
