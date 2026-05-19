@@ -109,4 +109,4 @@ theme_override_fonts/font = ExtResource("3_hagvj")
 theme_override_font_sizes/font_size = 25
 text = "Visita kiaramaldonado.com para más"
 underline = 1
-uri = "www.kiaramaldonado.com"
+uri = "https://kiaramaldonado.com"
